@@ -1,2 +1,2 @@
 # dgca-verification-center
-Verification centre for multi standard API
+Verification centre for multy standard API
