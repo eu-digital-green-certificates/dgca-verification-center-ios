@@ -1,5 +1,5 @@
 import Foundation
-import CoreLibrary
+import DGCCoreLibrary
 
 #if canImport(DCCInspection)
 import DCCInspection
@@ -35,7 +35,7 @@ public class DGCVerificationCenter {
         // Also cgange the name in directives in TestResultController
         #if canImport(DCCInspection)
             arrayTypes.append(.dcc)
-        dccInspector = DCCInspection() as? CertificateInspection
+        dccInspector = DCCInspection()
         #endif
         
         #if canImport(ICAOInspection)
@@ -57,7 +57,7 @@ public class DGCVerificationCenter {
         #if canImport(DCCInspection)
             if types.contains(.dcc) {
                 arrayTypes.append(.dcc)
-                dccInspector = DCCInspection() as? CertificateInspection
+                dccInspector = DCCInspection()
             }
         #endif
         
@@ -88,7 +88,7 @@ public class DGCVerificationCenter {
         #if canImport(DCCInspection)
             if type == .dcc {
                 arrayTypes.append(.dcc)
-                dccInspector = DCCInspection() as? CertificateInspection
+                dccInspector = DCCInspection()
             }
         #endif
         

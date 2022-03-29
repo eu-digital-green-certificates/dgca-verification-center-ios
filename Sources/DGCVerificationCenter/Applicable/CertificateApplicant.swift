@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import CoreLibrary
+import DGCCoreLibrary
 import SwiftyJSON
 import SwiftCBOR
 
