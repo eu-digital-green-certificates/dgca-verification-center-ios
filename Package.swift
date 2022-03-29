@@ -15,7 +15,7 @@ let package = Package(
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(path: "/Users/ikhomiak/Projects/dgca-ios-app-poc/DCCInspection"),
+        .package(name: "DCCInspection", url: "https://github.com/eu-digital-green-certificates/dgca-verification-dcc-inspection.git", .branch("main")),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.

@@ -15,8 +15,11 @@ import DIVOCInspection
 public class DGCVerificationCenter {
 
     public let applicableCertificateTypes: [CertificateType]
-    public var dccInspector: CertificateInspection?
     
+    public var dccInspector: CertificateInspection?
+    public var icaoInspectior: CertificateInspection?
+    public var divocInspectior: CertificateInspection?
+
     public init() {
         var arrayTypes = [CertificateType] ()
         
@@ -37,10 +40,12 @@ public class DGCVerificationCenter {
         
         #if canImport(ICAOInspection)
             arrayTypes.append(.icao)
+            icaoInspectior = ICAOInspection()
         #endif
         
         #if canImport(DIVOCInspection)
             arrayTypes.append(.divoc)
+            divocInspectior = DIVOCInspection()
         #endif
         
         self.applicableCertificateTypes = arrayTypes
@@ -59,12 +64,14 @@ public class DGCVerificationCenter {
         #if canImport(ICAOInspection)
             if types.contains(.icao) {
                 arrayTypes.append(.icao)
+                icaoInspectior = ICAOInspection()
             }
         #endif
         
         #if canImport(DIVOCInspection)
             if types.contains(.divoc) {
                 arrayTypes.append(.divoc)
+                divocInspectior = DIVOCInspection()
             }
         #endif
         
@@ -88,12 +95,14 @@ public class DGCVerificationCenter {
         #if canImport(ICAOInspection)
             if type == .icao {
                 arrayTypes.append(.icao)
+                icaoInspectior = ICAOInspection()
             }
         #endif
         
         #if canImport(DIVOCInspection)
             if type == .divoc {
                 arrayTypes.append(.divoc)
+                divocInspectior = DIVOCInspection()
             }
         #endif
 

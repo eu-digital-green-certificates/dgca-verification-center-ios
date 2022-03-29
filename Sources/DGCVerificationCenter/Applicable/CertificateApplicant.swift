@@ -16,9 +16,9 @@ public enum ClaimKey: String {
 }
 
 class CertificateApplicant {
-    static let supportedDCCPrefixes = [ "HC1:" ]
+    private static let supportedDCCPrefixes = [ "HC1:" ]
     
-    static func checkIfCH1PreffixExist(_ payloadString: String?) -> Bool {
+    private static func checkIfCH1PreffixExist(_ payloadString: String?) -> Bool {
         guard let payloadString = payloadString  else { return false }
         
         for dccPrefix in supportedDCCPrefixes {
@@ -29,7 +29,7 @@ class CertificateApplicant {
         return false
     }
 
-    static func parseSCCPrefix(_ payloadString: String) -> String {
+    private static func parseSCCPrefix(_ payloadString: String) -> String {
         for dccPrefix in supportedDCCPrefixes {
             if payloadString.starts(with: dccPrefix) {
                 return String(payloadString.dropFirst(dccPrefix.count))
