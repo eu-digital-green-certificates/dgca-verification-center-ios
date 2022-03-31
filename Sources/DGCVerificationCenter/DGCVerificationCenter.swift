@@ -34,7 +34,6 @@ public class DGCVerificationCenter {
 
     public var inspectors: [CertificateInspection] = []
     
-    
     public init() {
         var arrayTypes = [CertificateType] ()
         
