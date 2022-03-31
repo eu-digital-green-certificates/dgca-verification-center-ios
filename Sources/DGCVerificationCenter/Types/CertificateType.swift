@@ -12,5 +12,4 @@ public enum CertificateType: Int {
     case dcc
     case icao
     case divoc
-    case other
 }

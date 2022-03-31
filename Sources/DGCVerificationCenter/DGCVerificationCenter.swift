@@ -12,6 +12,13 @@ import DIVOCInspection
 #endif
 
 
+public enum DataLoadingError: Error {
+    case loadingError
+    case nodata
+    case networkError(description: String)
+}
+
+
 public class DGCVerificationCenter {
 
     public let applicableCertificateTypes: [CertificateType]
@@ -20,6 +27,9 @@ public class DGCVerificationCenter {
     public var icaoInspectior: CertificateInspection?
     public var divocInspectior: CertificateInspection?
 
+    public var inspectors: [CertificateInspection] = []
+    
+    
     public init() {
         var arrayTypes = [CertificateType] ()
         
@@ -35,17 +45,23 @@ public class DGCVerificationCenter {
         // Also cgange the name in directives in TestResultController
         #if canImport(DCCInspection)
             arrayTypes.append(.dcc)
-        dccInspector = DCCInspection()
+            let inspector = DCCInspection()
+            self.inspectors.append(inspector)
+            self.dccInspector = inspector
         #endif
         
         #if canImport(ICAOInspection)
             arrayTypes.append(.icao)
-            icaoInspectior = ICAOInspection()
+            let inspector = ICAOInspection()
+            self.inspectors.append(inspector)
+            self.icaoInspectior = inspector
         #endif
         
         #if canImport(DIVOCInspection)
             arrayTypes.append(.divoc)
-            divocInspectior = DIVOCInspection()
+            let inspector = DIVOCInspection()
+            self.inspectors.append(inspector)
+            self.divocInspectior = inspector
         #endif
         
         self.applicableCertificateTypes = arrayTypes
@@ -57,21 +73,27 @@ public class DGCVerificationCenter {
         #if canImport(DCCInspection)
             if types.contains(.dcc) {
                 arrayTypes.append(.dcc)
-                dccInspector = DCCInspection()
+                let inspector = DCCInspection()
+                self.inspectors.append(inspector)
+                self.dccInspector = inspector
             }
         #endif
         
         #if canImport(ICAOInspection)
             if types.contains(.icao) {
                 arrayTypes.append(.icao)
-                icaoInspectior = ICAOInspection()
+                let inspector = ICAOInspection()
+                self.inspectors.append(inspector)
+                self.icaoInspectior = inspector
             }
         #endif
         
         #if canImport(DIVOCInspection)
             if types.contains(.divoc) {
                 arrayTypes.append(.divoc)
-                divocInspectior = DIVOCInspection()
+                let inspector = DIVOCInspection()
+                self.inspectors.append(inspector)
+                self.divocInspectior = inspector
             }
         #endif
         
@@ -88,21 +110,27 @@ public class DGCVerificationCenter {
         #if canImport(DCCInspection)
             if type == .dcc {
                 arrayTypes.append(.dcc)
-                dccInspector = DCCInspection()
+                let inspector = DCCInspection()
+                self.inspectors.append(inspector)
+                self.dccInspector = inspector
             }
         #endif
         
         #if canImport(ICAOInspection)
             if type == .icao {
                 arrayTypes.append(.icao)
-                icaoInspectior = ICAOInspection()
+                let inspector = ICAOInspection()
+                self.inspectors.append(inspector)
+                self.icaoInspectior = inspector
             }
         #endif
         
         #if canImport(DIVOCInspection)
             if type == .divoc {
                 arrayTypes.append(.divoc)
-                divocInspectior = DIVOCInspection()
+                let inspector = DIVOCInspection()
+                self.inspectors.append(inspector)
+                self.divocInspectior = inspector
             }
         #endif
 
@@ -125,4 +153,35 @@ public class DGCVerificationCenter {
 //        return !ticketing.token.isEmpty
 //    }
 
+    // MARK: - Data Loading
+    
+    public func prepareAllStoredData(appType: AppType, completion: @escaping DataCompletionHandler) {
+        let group = DispatchGroup()
+        
+        for inspector in inspectors {
+            group.enter()
+            inspector.prepareLocallyStoredData(appType: appType) { err in
+                group.leave()
+            }
+        }
+        group.notify(queue: .main) {
+            completion(.success)
+        }
+
+    }
+    
+    public func updateStoredData(appType: AppType, completion: @escaping DataCompletionHandler) {
+        let group = DispatchGroup()
+        
+        for inspector in inspectors {
+            group.enter()
+            inspector.updateLocallyStoredData(appType: appType) { err in
+                group.leave()
+            }
+        }
+        group.notify(queue: .main) {
+            completion(.success)
+        }
+
+    }
 }
