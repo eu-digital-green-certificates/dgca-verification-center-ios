@@ -21,6 +21,11 @@ public enum DataLoadingError: Error {
 
 public class DGCVerificationCenter {
 
+    public struct SharedLinks {
+        public static let linkToOpenGitHubSource = "https://github.com/eu-digital-green-certificates"
+        public static let linkToOopenEuCertDoc = "https://ec.europa.eu/health/ehealth/covid-19_en"
+    }
+    
     public let applicableCertificateTypes: [CertificateType]
     
     public var dccInspector: CertificateInspection?
