@@ -155,7 +155,7 @@ public class DGCVerificationCenter {
 
     // MARK: - Data Loading
     
-    public func prepareAllStoredData(appType: AppType, completion: @escaping DataCompletionHandler) {
+    public func prepareStoredData(appType: AppType, completion: @escaping DataCompletionHandler) {
         let group = DispatchGroup()
         
         for inspector in inspectors {
