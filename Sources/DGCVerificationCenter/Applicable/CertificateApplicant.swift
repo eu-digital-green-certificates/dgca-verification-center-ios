@@ -10,7 +10,7 @@ import DGCCoreLibrary
 import SwiftyJSON
 import SwiftCBOR
 
-public enum ClaimKey: String {
+enum ClaimKey: String {
   case hCert = "-260"
   case euDgcV1 = "1"
 }
@@ -38,7 +38,7 @@ class CertificateApplicant {
         return payloadString
     }
 
-    public static func isApplicableDCCFormat(payload: String) -> Bool {
+    static func isApplicableDCCFormat(payload: String) -> Bool {
         let payloadString: String
         if checkIfCH1PreffixExist(payload) {
             payloadString = parseSCCPrefix(payload)
@@ -65,5 +65,13 @@ class CertificateApplicant {
         }
         
         return body[ClaimKey.euDgcV1.rawValue].exists()
+    }
+    
+    static func isApplicableICAOFormat(payload: String) -> Bool {
+        return false
+    }
+    
+    static func isApplicableDIVOCFormat(payload: String) -> Bool {
+        return false
     }
 }

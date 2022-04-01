@@ -158,7 +158,6 @@ public class DGCVerificationCenter {
 //    }
 
     // MARK: - Data Loading
-    
     public func prepareStoredData(appType: AppType, completion: @escaping DataCompletionHandler) {
         let group = DispatchGroup()
         
@@ -171,7 +170,6 @@ public class DGCVerificationCenter {
         group.notify(queue: .main) {
             completion(.success)
         }
-
     }
     
     public func updateStoredData(appType: AppType, completion: @escaping DataCompletionHandler) {
@@ -186,6 +184,9 @@ public class DGCVerificationCenter {
         group.notify(queue: .main) {
             completion(.success)
         }
-
     }
+    
+    // MARK: - Data Loading
+    
+    
 }
