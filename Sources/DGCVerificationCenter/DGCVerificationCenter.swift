@@ -18,7 +18,6 @@ public enum DataLoadingError: Error {
     case networkError(description: String)
 }
 
-
 public class DGCVerificationCenter {
 
     public struct SharedLinks {
@@ -31,7 +30,7 @@ public class DGCVerificationCenter {
     public var dccInspector: CertificateInspection?
     public var icaoInspectior: CertificateInspection?
     public var divocInspectior: CertificateInspection?
-
+    
     public var inspectors: [CertificateInspection] = []
     
     public init() {
