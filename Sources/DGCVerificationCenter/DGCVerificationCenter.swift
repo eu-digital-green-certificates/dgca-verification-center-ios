@@ -28,8 +28,8 @@ public class DGCVerificationCenter {
     public let applicableCertificateTypes: [CertificateType]
     
     public var dccInspector: CertificateInspection?
-    public var icaoInspectior: CertificateInspection?
-    public var divocInspectior: CertificateInspection?
+    public var icaoInspector: CertificateInspection?
+    public var divocInspector: CertificateInspection?
     
     public var inspectors: [CertificateInspection] = []
     
@@ -57,14 +57,14 @@ public class DGCVerificationCenter {
             arrayTypes.append(.icao)
             let inspector = ICAOInspection()
             self.inspectors.append(inspector)
-            self.icaoInspectior = inspector
+            self.icaoInspector = inspector
         #endif
         
         #if canImport(DIVOCInspection)
             arrayTypes.append(.divoc)
             let inspector = DIVOCInspection()
             self.inspectors.append(inspector)
-            self.divocInspectior = inspector
+            self.divocInspector = inspector
         #endif
         
         self.applicableCertificateTypes = arrayTypes
@@ -87,7 +87,7 @@ public class DGCVerificationCenter {
                 arrayTypes.append(.icao)
                 let inspector = ICAOInspection()
                 self.inspectors.append(inspector)
-                self.icaoInspectior = inspector
+                self.icaoInspector = inspector
             }
         #endif
         
@@ -96,7 +96,7 @@ public class DGCVerificationCenter {
                 arrayTypes.append(.divoc)
                 let inspector = DIVOCInspection()
                 self.inspectors.append(inspector)
-                self.divocInspectior = inspector
+                self.divocInspector = inspector
             }
         #endif
         
@@ -124,7 +124,7 @@ public class DGCVerificationCenter {
                 arrayTypes.append(.icao)
                 let inspector = ICAOInspection()
                 self.inspectors.append(inspector)
-                self.icaoInspectior = inspector
+                self.icaoInspector = inspector
             }
         #endif
         
@@ -133,7 +133,7 @@ public class DGCVerificationCenter {
                 arrayTypes.append(.divoc)
                 let inspector = DIVOCInspection()
                 self.inspectors.append(inspector)
-                self.divocInspectior = inspector
+                self.divocInspector = inspector
             }
         #endif
 
@@ -185,7 +185,19 @@ public class DGCVerificationCenter {
         }
     }
     
-    // MARK: - Data Loading
+    // MARK: - Verifying
     
-    
+    public func validateCertificate(_ certificate: MultiTypeCertificate) -> CertificateVerifying {
+        switch certificate.certificateType {
+        case .dcc:
+            let dccVerification = dccInspector?.validateCertificate(certificate.digitalCertificate)
+            return dccVerification
+        case .icao:
+            let icaoVerification = icaoInspector?.validateCertificate(certificate.digitalCertificate)
+            return dccVerification
+        case .divoc:
+            let divocVerification = divocInspector?.validateCertificate(certificate.digitalCertificate)
+            return dccVerification
+        }
+    }
 }

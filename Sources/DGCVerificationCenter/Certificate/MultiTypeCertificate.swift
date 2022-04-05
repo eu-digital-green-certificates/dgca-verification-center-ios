@@ -18,31 +18,31 @@ import ICAOInspection
 import DIVOCInspection
 #endif
 
-public class Certificate {
+public class MultiTypeCertificate {
     public let certificateType: CertificateType?
     public let ruleCountryCode: String?
     
+    internal var digitalCertificate: CertificationProtocol?
+    
     public var firstName: String {
-        certificate?.firstName ?? ""
+        digitalCertificate?.firstName ?? ""
     }
     
     public var firstNameStandardized: String? {
-        certificate?.firstNameStandardized ?? ""
+        digitalCertificate?.firstNameStandardized ?? ""
     }
     
     public var lastName: String {
-        certificate?.lastName ?? ""
+        digitalCertificate?.lastName ?? ""
     }
     
     public var lastNameStandardized: String {
-        certificate?.lastNameStandardized ?? ""
+        digitalCertificate?.lastNameStandardized ?? ""
     }
 
     public var fullName: String {
-        certificate?.fullName ?? ""
+        digitalCertificate?.fullName ?? ""
     }
-    
-    private var certificate: CertificateApplication?
     
     public init?(from payload: String, ruleCountryCode: String? = nil) {
         self.ruleCountryCode = ruleCountryCode
@@ -50,20 +50,20 @@ public class Certificate {
         if CertificateApplicant.isApplicableDCCFormat(payload: payload) {
             self.certificateType = .dcc
         #if canImport(DCCInspection)
-            self.certificate =  try? HCert(payload: payload, ruleCountryCode: ruleCountryCode)
+            self.digitalCertificate = try? HCert(payload: payload, ruleCountryCode: ruleCountryCode)
         #endif
 
         } else if CertificateApplicant.isApplicableICAOFormat(payload: payload) {
             self.certificateType = .icao
-            #if canImport(ICAOInspection)
-            self.certificate = HCert(from: payload, ruleCountryCode: ruleCountryCode)
-            #endif
+        #if canImport(ICAOInspection)
+            self.digitalCertificate = HCert(from: payload, ruleCountryCode: ruleCountryCode)
+        #endif
 
         } else if CertificateApplicant.isApplicableDIVOCFormat(payload: payload) {
             self.certificateType = .divoc
-            #if canImport(DIVOCInspection)
-            self.certificate = HCert(from: payload, ruleCountryCode: ruleCountryCode)
-            #endif
+        #if canImport(DIVOCInspection)
+            self.digitalCertificate = HCert(from: payload, ruleCountryCode: ruleCountryCode)
+        #endif
         }
         return nil
     }

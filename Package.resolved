@@ -78,7 +78,7 @@
         "repositoryURL": "https://github.com/eu-digital-green-certificates/dgca-verification-core-library.git",
         "state": {
           "branch": "main",
-          "revision": "305aa91c5c9fc6b38836f348f98c61851fe8e06b",
+          "revision": "1e3318ee5a42dd86b0a7a68a7851a87b4cb93b0e",
           "version": null
         }
       },
@@ -87,7 +87,7 @@
         "repositoryURL": "https://github.com/eu-digital-green-certificates/dgca-verification-dcc-inspection.git",
         "state": {
           "branch": "main",
-          "revision": "1e75ff95307b5ea407160e356655f3bc4f000486",
+          "revision": "d194e18fdf733acba236a98cf2f5828b176bee3e",
           "version": null
         }
       },
