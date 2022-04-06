@@ -22,7 +22,7 @@ public class MultiTypeCertificate {
     public let certificateType: CertificateType
     public let ruleCountryCode: String?
     
-    internal var digitalCertificate: CertificationProtocol?
+    public var digitalCertificate: CertificationProtocol?
     
     public var firstName: String {
         digitalCertificate?.firstName ?? ""
