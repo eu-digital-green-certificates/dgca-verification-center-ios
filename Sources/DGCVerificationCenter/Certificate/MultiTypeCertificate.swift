@@ -19,7 +19,7 @@ import DIVOCInspection
 #endif
 
 public class MultiTypeCertificate {
-    public let certificateType: CertificateType?
+    public let certificateType: CertificateType
     public let ruleCountryCode: String?
     
     internal var digitalCertificate: CertificationProtocol?
@@ -56,13 +56,13 @@ public class MultiTypeCertificate {
         } else if CertificateApplicant.isApplicableICAOFormat(payload: payload) {
             self.certificateType = .icao
         #if canImport(ICAOInspection)
-            self.digitalCertificate = HCert(from: payload, ruleCountryCode: ruleCountryCode)
+            self.digitalCertificate = try? HCert(from: payload, ruleCountryCode: ruleCountryCode)
         #endif
 
         } else if CertificateApplicant.isApplicableDIVOCFormat(payload: payload) {
             self.certificateType = .divoc
         #if canImport(DIVOCInspection)
-            self.digitalCertificate = HCert(from: payload, ruleCountryCode: ruleCountryCode)
+            self.digitalCertificate = try? HCert(from: payload, ruleCountryCode: ruleCountryCode)
         #endif
         }
         return nil

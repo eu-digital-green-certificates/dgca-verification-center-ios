@@ -47,5 +47,4 @@ public class VerificationDataCenter {
             UserDefaults.standard.set(newValue, forKey: Constants.lastLaunchedAppVersionKey)
         }
     }
-
 }

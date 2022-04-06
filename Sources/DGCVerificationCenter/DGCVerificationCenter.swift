@@ -148,6 +148,7 @@ public class DGCVerificationCenter {
     public func isVerifiableCertificateType(_ type: CertificateType) -> Bool {
         return self.applicableCertificateTypes.contains(type)
     }
+    
 
     // MARK: - Validation
 //    public static func isApplicableToTicketingFormat(payload: String) -> Bool {
@@ -187,17 +188,20 @@ public class DGCVerificationCenter {
     
     // MARK: - Verifying
     
-    public func validateCertificate(_ certificate: MultiTypeCertificate) -> CertificateVerifying {
-        switch certificate.certificateType {
+    public func validateCertificate(_ multiTypeCertificate: MultiTypeCertificate) -> VerifyingProtocol? {
+        guard let certificate = multiTypeCertificate.digitalCertificate else {
+            return nil
+        }
+        switch multiTypeCertificate.certificateType {
         case .dcc:
-            let dccVerification = dccInspector?.validateCertificate(certificate.digitalCertificate)
+            let dccVerification = dccInspector?.validateCertificate(certificate)
             return dccVerification
         case .icao:
-            let icaoVerification = icaoInspector?.validateCertificate(certificate.digitalCertificate)
-            return dccVerification
+            let icaoVerification = icaoInspector?.validateCertificate(certificate)
+            return icaoVerification
         case .divoc:
-            let divocVerification = divocInspector?.validateCertificate(certificate.digitalCertificate)
-            return dccVerification
+            let divocVerification = divocInspector?.validateCertificate(certificate)
+            return divocVerification
         }
     }
 }

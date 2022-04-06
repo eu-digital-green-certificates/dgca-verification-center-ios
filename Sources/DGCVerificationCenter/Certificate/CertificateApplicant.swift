@@ -15,7 +15,7 @@ enum ClaimKey: String {
   case euDgcV1 = "1"
 }
 
-class CertificateApplicant {
+public class CertificateApplicant {
     private static let supportedDCCPrefixes = [ "HC1:" ]
     
     private static func checkIfCH1PreffixExist(_ payloadString: String?) -> Bool {
@@ -38,7 +38,7 @@ class CertificateApplicant {
         return payloadString
     }
 
-    static func isApplicableDCCFormat(payload: String) -> Bool {
+    public static func isApplicableDCCFormat(payload: String) -> Bool {
         let payloadString: String
         if checkIfCH1PreffixExist(payload) {
             payloadString = parseSCCPrefix(payload)
@@ -67,11 +67,11 @@ class CertificateApplicant {
         return body[ClaimKey.euDgcV1.rawValue].exists()
     }
     
-    static func isApplicableICAOFormat(payload: String) -> Bool {
+    public static func isApplicableICAOFormat(payload: String) -> Bool {
         return false
     }
     
-    static func isApplicableDIVOCFormat(payload: String) -> Bool {
+    public static func isApplicableDIVOCFormat(payload: String) -> Bool {
         return false
     }
 }
