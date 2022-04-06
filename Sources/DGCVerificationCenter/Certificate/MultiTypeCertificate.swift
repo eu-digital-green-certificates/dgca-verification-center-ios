@@ -64,8 +64,9 @@ public class MultiTypeCertificate {
         #if canImport(DIVOCInspection)
             self.digitalCertificate = try? HCert(from: payload, ruleCountryCode: ruleCountryCode)
         #endif
+        } else {
+            return nil
         }
-        return nil
     }
 
 }
