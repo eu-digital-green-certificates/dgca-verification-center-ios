@@ -30,7 +30,9 @@ public class DGCVerificationCenter {
     public var dccInspector: CertificateInspection?
     public var icaoInspector: CertificateInspection?
     public var divocInspector: CertificateInspection?
-    
+    public var vcInspector: CertificateInspection?
+    public var shcInspector: CertificateInspection?
+
     public var inspectors: [CertificateInspection] = []
     
     public init() {
@@ -46,6 +48,7 @@ public class DGCVerificationCenter {
         //
         // To imitate absense one of listed modules simple change name to supposed name
         // Also cgange the name in directives in TestResultController
+        
         #if canImport(DCCInspection)
             arrayTypes.append(.dcc)
             let inspector = DCCInspection()
@@ -60,11 +63,18 @@ public class DGCVerificationCenter {
             self.icaoInspector = inspector
         #endif
         
-        #if canImport(DIVOCInspection)
-            arrayTypes.append(.divoc)
-            let inspector = DIVOCInspection()
+        #if canImport(VCInspection)
+            arrayTypes.append(.vc)
+            let inspector = VCInspection()
             self.inspectors.append(inspector)
-            self.divocInspector = inspector
+            self.vcInspector = inspector
+        #endif
+
+        #if canImport(SCHInspection)
+            arrayTypes.append(.shc)
+            let inspector = SHCInspection()
+            self.inspectors.append(inspector)
+            self.shcInspector = inspector
         #endif
         
         self.applicableCertificateTypes = arrayTypes
@@ -97,6 +107,24 @@ public class DGCVerificationCenter {
                 let inspector = DIVOCInspection()
                 self.inspectors.append(inspector)
                 self.divocInspector = inspector
+            }
+        #endif
+        
+        #if canImport(VCInspection)
+            if types.contains(.vc) {
+                arrayTypes.append(.vc)
+                let inspector = VCInspection()
+                self.inspectors.append(inspector)
+                self.vcInspector = inspector
+            }
+        #endif
+        
+        #if canImport(SCHInspection)
+            if types.contains(.shc) {
+                arrayTypes.append(.shc)
+                let inspector = SHCInspection()
+                self.inspectors.append(inspector)
+                self.shcInspector = inspector
             }
         #endif
         
@@ -136,6 +164,23 @@ public class DGCVerificationCenter {
                 self.divocInspector = inspector
             }
         #endif
+        #if canImport(VCInspection)
+            if types.contains(.vc) {
+                arrayTypes.append(.vc)
+                let inspector = VCInspection()
+                self.inspectors.append(inspector)
+                self.vcInspector = inspector
+            }
+        #endif
+
+        #if canImport(SCHInspection)
+            if types.contains(.shc) {
+                arrayTypes.append(.shc)
+                let inspector = SHCInspection()
+                self.inspectors.append(inspector)
+                self.shcInspector = inspector
+            }
+        #endif
 
         if !arrayTypes.isEmpty {
             self.applicableCertificateTypes = arrayTypes
@@ -149,7 +194,6 @@ public class DGCVerificationCenter {
         return self.applicableCertificateTypes.contains(type)
     }
     
-
     // MARK: - Validation
 //    public static func isApplicableToTicketingFormat(payload: String) -> Bool {
 //        guard let payloadData = payload.data(using: .utf8),
@@ -189,9 +233,8 @@ public class DGCVerificationCenter {
     // MARK: - Verifying
     
     public func validateCertificate(_ multiTypeCertificate: MultiTypeCertificate) -> VerifyingProtocol? {
-        guard let certificate = multiTypeCertificate.digitalCertificate else {
-            return nil
-        }
+        guard let certificate = multiTypeCertificate.digitalCertificate else { return nil }
+        
         switch multiTypeCertificate.certificateType {
         case .dcc:
             let dccVerification = dccInspector?.validateCertificate(certificate)
@@ -202,6 +245,12 @@ public class DGCVerificationCenter {
         case .divoc:
             let divocVerification = divocInspector?.validateCertificate(certificate)
             return divocVerification
+        case .vc:
+            let vcVerification = vcInspector?.validateCertificate(certificate)
+            return vcVerification
+        case .shc:
+            let shcVerification = shcInspector?.validateCertificate(certificate)
+            return shcVerification
         }
     }
 }

@@ -17,8 +17,10 @@ enum ClaimKey: String {
 
 public class CertificateApplicant {
     private static let supportedDCCPrefixes = [ "HC1:" ]
-    
-    private static func checkIfCH1PreffixExist(_ payloadString: String?) -> Bool {
+    private static let supportedSHCPrefixes = [ "shc:/" ]
+
+    // MARK: - DCC
+    private static func doesCH1PreffixExist(_ payloadString: String?) -> Bool {
         guard let payloadString = payloadString  else { return false }
         
         for dccPrefix in supportedDCCPrefixes {
@@ -28,8 +30,8 @@ public class CertificateApplicant {
         }
         return false
     }
-
-    private static func parseSCCPrefix(_ payloadString: String) -> String {
+    
+    private static func parseDCCPrefix(_ payloadString: String) -> String {
         for dccPrefix in supportedDCCPrefixes {
             if payloadString.starts(with: dccPrefix) {
                 return String(payloadString.dropFirst(dccPrefix.count))
@@ -37,11 +39,23 @@ public class CertificateApplicant {
         }
         return payloadString
     }
-
+    
+    // MARK: - SCH
+    private static func doesSCHPreffixExist(_ payloadString: String?) -> Bool {
+        guard let payloadString = payloadString  else { return false }
+        
+        for dccPrefix in supportedSHCPrefixes {
+            if payloadString.starts(with: dccPrefix) {
+                return true
+            }
+        }
+        return false
+    }
+    
     public static func isApplicableDCCFormat(payload: String) -> Bool {
         let payloadString: String
-        if checkIfCH1PreffixExist(payload) {
-            payloadString = parseSCCPrefix(payload)
+        if doesCH1PreffixExist(payload) {
+            payloadString = parseDCCPrefix(payload)
         } else {
             payloadString = payload
         }
@@ -55,11 +69,11 @@ public class CertificateApplicant {
             let bodyStr = CBOR.payload(from: cborData)?.toString(),
             let kid = CBOR.kid(from: cborData)
         else { return false }
-
+        
         let kidStr = KID.string(from: kid)
         let header = JSON(parseJSON: headerStr)
         var body = JSON(parseJSON: bodyStr)
-
+        
         if !kidStr.isEmpty && !header.isEmpty && body[ClaimKey.hCert.rawValue].exists() {
             body = body[ClaimKey.hCert.rawValue]
         }
@@ -73,5 +87,18 @@ public class CertificateApplicant {
     
     public static func isApplicableDIVOCFormat(payload: String) -> Bool {
         return false
+    }
+    
+    public static func isApplicableVCFormat(payload: String) -> Bool {
+        return false
+    }
+    
+    public static func isApplicableSHCFormat(payload: String) -> Bool {
+        let payloadString: String
+        if doesSCHPreffixExist(payload) {
+            return true
+        } else {
+            return false
+        }
     }
 }
