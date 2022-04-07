@@ -29,6 +29,7 @@ public class MultiTypeCertificate {
     public let ruleCountryCode: String?
     
     public let scannedDate: Date
+    public var storedTan: String?
     
     public var digitalCertificate: CertificationProtocol?
     
@@ -83,37 +84,37 @@ public class MultiTypeCertificate {
         #if canImport(DCCInspection)
             self.digitalCertificate = try? HCert(payload: payload, ruleCountryCode: ruleCountryCode)
         #endif
-
+        
         } else if CertificateApplicant.isApplicableICAOFormat(payload: payload) {
             self.certificateType = .icao
         #if canImport(ICAOInspection)
             self.digitalCertificate = try? HCert(from: payload, ruleCountryCode: ruleCountryCode)
         #endif
-
+        
         } else if CertificateApplicant.isApplicableDIVOCFormat(payload: payload) {
             self.certificateType = .divoc
         #if canImport(DIVOCInspection)
             self.digitalCertificate = try? HCert(from: payload, ruleCountryCode: ruleCountryCode)
         #endif
-            
+        
         } else if CertificateApplicant.isApplicableDIVOCFormat(payload: payload) {
             self.certificateType = .divoc
         #if canImport(VCInspection)
             self.digitalCertificate = try? HCert(from: payload, ruleCountryCode: ruleCountryCode)
         #endif
-            
+        
         } else if CertificateApplicant.isApplicableDIVOCFormat(payload: payload) {
             self.certificateType = .divoc
         #if canImport(SHCInspection)
             self.digitalCertificate = try? HCert(from: payload, ruleCountryCode: ruleCountryCode)
         #endif
-
+        
         } else {
             return nil
         }
     }
     
-    public init(with certificate: CertificationProtocol, type: CertificateType, scannedDate: Date, ruleCountryCode: String? = nil) {
+    public init(with certificate: CertificationProtocol, type: CertificateType, scannedDate: Date, storedTan: String?, ruleCountryCode: String? = nil) {
         self.ruleCountryCode = ruleCountryCode
         self.certificateType = type
         self.digitalCertificate = certificate
