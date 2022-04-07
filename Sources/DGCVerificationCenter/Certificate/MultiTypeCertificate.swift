@@ -28,6 +28,8 @@ public class MultiTypeCertificate {
     public let certificateType: CertificateType
     public let ruleCountryCode: String?
     
+    public let scannedDate: Date
+    
     public var digitalCertificate: CertificationProtocol?
     
     public var firstName: String {
@@ -59,7 +61,7 @@ public class MultiTypeCertificate {
     }
             
     public var certHash: String {
-        digitalCertificate?.certHash
+        digitalCertificate?.certHash ?? ""
     }
     
     public var uvciHash: Data? {
@@ -74,6 +76,7 @@ public class MultiTypeCertificate {
 
     public init?(from payload: String, ruleCountryCode: String? = nil) {
         self.ruleCountryCode = ruleCountryCode
+        self.scannedDate = Date()
         
         if CertificateApplicant.isApplicableDCCFormat(payload: payload) {
             self.certificateType = .dcc
@@ -110,9 +113,10 @@ public class MultiTypeCertificate {
         }
     }
     
-    public init(with certificate: CertificationProtocol, type: CertificateType, ruleCountryCode: String? = nil) {
+    public init(with certificate: CertificationProtocol, type: CertificateType, scannedDate: Date, ruleCountryCode: String? = nil) {
         self.ruleCountryCode = ruleCountryCode
         self.certificateType = type
         self.digitalCertificate = certificate
+        self.scannedDate = scannedDate
     }
 }
