@@ -50,6 +50,28 @@ public class MultiTypeCertificate {
         digitalCertificate?.fullName ?? ""
     }
     
+    public var certTypeString: String {
+        digitalCertificate?.certTypeString ?? ""
+    }
+
+    public var isRevoked: Bool {
+        digitalCertificate?.isRevoked ?? false
+    }
+            
+    public var certHash: String {
+        digitalCertificate?.certHash
+    }
+    
+    public var uvciHash: Data? {
+        digitalCertificate?.uvciHash
+    }
+    public var countryCodeUvciHash: Data? {
+        digitalCertificate?.countryCodeUvciHash
+    }
+    public var signatureHash: Data? {
+        digitalCertificate?.signatureHash
+    }
+
     public init?(from payload: String, ruleCountryCode: String? = nil) {
         self.ruleCountryCode = ruleCountryCode
         
