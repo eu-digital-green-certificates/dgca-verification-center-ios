@@ -69,9 +69,11 @@ public class MultiTypeCertificate {
     public var uvciHash: Data? {
         digitalCertificate?.uvciHash
     }
+    
     public var countryCodeUvciHash: Data? {
         digitalCertificate?.countryCodeUvciHash
     }
+    
     public var signatureHash: Data? {
         digitalCertificate?.signatureHash
     }
