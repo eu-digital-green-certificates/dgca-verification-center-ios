@@ -7,6 +7,7 @@
 
 import Foundation
 import DGCCoreLibrary
+import SwiftyJSON
 
 #if canImport(DCCInspection)
 import DCCInspection
