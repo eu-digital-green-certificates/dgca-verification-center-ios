@@ -29,4 +29,20 @@ public enum CertificateType: String {
             return "SMART Health Cards"
         }
     }
+    
+    public var certificateTaskDescription: String {
+        switch self {
+        case .dcc:
+            return "Trusted Public keys and Revocation Data"
+        case .icao:
+            return "ICAO Certificate Data"
+        case .divoc:
+            return "DIVOC Certificate Data"
+        case .vc:
+            return "Verifiable Credentials data"
+        case .shc:
+            return "SMART Health Cards Data"
+        }
+    }
+
 }
