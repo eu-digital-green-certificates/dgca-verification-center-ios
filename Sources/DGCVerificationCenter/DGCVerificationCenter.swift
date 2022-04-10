@@ -12,8 +12,8 @@ import DIVOCInspection
 #endif
 
 public struct ApplicableInspector {
-    let type: CertificateType
-    let inspector: CertificateInspection
+    public let type: CertificateType
+    public let inspector: CertificateInspection
 }
 
 public class DGCVerificationCenter {
