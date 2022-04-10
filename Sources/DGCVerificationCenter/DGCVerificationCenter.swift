@@ -11,11 +11,9 @@ import ICAOInspection
 import DIVOCInspection
 #endif
 
-
-public enum DataLoadingError: Error {
-    case loadingError
-    case nodata
-    case networkError(description: String)
+public struct ApplicableInspector {
+    let type: CertificateType
+    let inspector: CertificateInspection
 }
 
 public class DGCVerificationCenter {
@@ -33,7 +31,7 @@ public class DGCVerificationCenter {
     public var vcInspector: CertificateInspection?
     public var shcInspector: CertificateInspection?
 
-    public var inspectors: [CertificateInspection] = []
+    public var applicableInspectors: [ApplicableInspector] = []
     
     public init() {
         var arrayTypes = [CertificateType] ()
@@ -52,30 +50,42 @@ public class DGCVerificationCenter {
         #if canImport(DCCInspection)
             arrayTypes.append(.dcc)
             let inspector = DCCInspection()
-            self.inspectors.append(inspector)
             self.dccInspector = inspector
+            let applicableInspector = ApplicableInspector(type: .dcc, inspector: inspector)
+            self.applicableInspectors.append(applicableInspector)
         #endif
         
         #if canImport(ICAOInspection)
             arrayTypes.append(.icao)
             let inspector = ICAOInspection()
-            self.inspectors.append(inspector)
             self.icaoInspector = inspector
+            let applicableInspector = ApplicableInspector(type: .icao, inspector: inspector)
+            self.applicableInspectors.append(applicableInspector)
         #endif
         
+        #if canImport(DIVOCInspection)
+            arrayTypes.append(.divoc)
+            let inspector = DIVOCInspection()
+            self.icaoInspector = inspector
+            let applicableInspector = ApplicableInspector(type: .divoc, inspector: inspector)
+            self.applicableInspectors.append(applicableInspector)
+        #endif
+
         #if canImport(VCInspection)
             arrayTypes.append(.vc)
             let inspector = VCInspection()
-            self.inspectors.append(inspector)
             self.vcInspector = inspector
+            let applicableInspector = ApplicableInspector(type: .vc, inspector: inspector)
+            self.applicableInspectors.append(applicableInspector)
         #endif
 
         #if canImport(SCHInspection)
             arrayTypes.append(.shc)
             let inspector = SHCInspection()
-            self.inspectors.append(inspector)
             self.shcInspector = inspector
-        #endif
+            let applicableInspector = ApplicableInspector(type: .shc, inspector: inspector)
+            self.applicableInspectors.append(applicableInspector)
+            #endif
         
         self.applicableCertificateTypes = arrayTypes
     }
@@ -87,8 +97,9 @@ public class DGCVerificationCenter {
             if types.contains(.dcc) {
                 arrayTypes.append(.dcc)
                 let inspector = DCCInspection()
-                self.inspectors.append(inspector)
                 self.dccInspector = inspector
+                let applicableInspector = ApplicableInspector(type: .dcc, inspector: inspector)
+                self.applicableInspectors.append(applicableInspector)
             }
         #endif
         
@@ -96,8 +107,9 @@ public class DGCVerificationCenter {
             if types.contains(.icao) {
                 arrayTypes.append(.icao)
                 let inspector = ICAOInspection()
-                self.inspectors.append(inspector)
                 self.icaoInspector = inspector
+                let applicableInspector = ApplicableInspector(type: .icao, inspector: inspector)
+                self.applicableInspectors.append(applicableInspector)
             }
         #endif
         
@@ -105,8 +117,9 @@ public class DGCVerificationCenter {
             if types.contains(.divoc) {
                 arrayTypes.append(.divoc)
                 let inspector = DIVOCInspection()
-                self.inspectors.append(inspector)
                 self.divocInspector = inspector
+                let applicableInspector = ApplicableInspector(type: .divoc, inspector: inspector)
+                self.applicableInspectors.append(applicableInspector)
             }
         #endif
         
@@ -114,8 +127,9 @@ public class DGCVerificationCenter {
             if types.contains(.vc) {
                 arrayTypes.append(.vc)
                 let inspector = VCInspection()
-                self.inspectors.append(inspector)
                 self.vcInspector = inspector
+                let applicableInspector = ApplicableInspector(type: .vc, inspector: inspector)
+                self.applicableInspectors.append(applicableInspector)
             }
         #endif
         
@@ -123,8 +137,9 @@ public class DGCVerificationCenter {
             if types.contains(.shc) {
                 arrayTypes.append(.shc)
                 let inspector = SHCInspection()
-                self.inspectors.append(inspector)
                 self.shcInspector = inspector
+                let applicableInspector = ApplicableInspector(type: .shc, inspector: inspector)
+                self.applicableInspectors.append(applicableInspector)
             }
         #endif
         
@@ -142,8 +157,9 @@ public class DGCVerificationCenter {
             if type == .dcc {
                 arrayTypes.append(.dcc)
                 let inspector = DCCInspection()
-                self.inspectors.append(inspector)
                 self.dccInspector = inspector
+                let applicableInspector = ApplicableInspector(type: .dcc, inspector: inspector)
+                self.applicableInspectors.append(applicableInspector)
             }
         #endif
         
@@ -151,8 +167,9 @@ public class DGCVerificationCenter {
             if type == .icao {
                 arrayTypes.append(.icao)
                 let inspector = ICAOInspection()
-                self.inspectors.append(inspector)
                 self.icaoInspector = inspector
+                let applicableInspector = ApplicableInspector(type: .icao, inspector: inspector)
+                self.applicableInspectors.append(applicableInspector)
             }
         #endif
         
@@ -160,16 +177,19 @@ public class DGCVerificationCenter {
             if type == .divoc {
                 arrayTypes.append(.divoc)
                 let inspector = DIVOCInspection()
-                self.inspectors.append(inspector)
                 self.divocInspector = inspector
+                let applicableInspector = ApplicableInspector(type: .divoc, inspector: inspector)
+                self.applicableInspectors.append(applicableInspector)
+
             }
         #endif
         #if canImport(VCInspection)
             if types.contains(.vc) {
                 arrayTypes.append(.vc)
                 let inspector = VCInspection()
-                self.inspectors.append(inspector)
                 self.vcInspector = inspector
+                let applicableInspector = ApplicableInspector(type: .vc, inspector: inspector)
+                self.applicableInspectors.append(applicableInspector)
             }
         #endif
 
@@ -177,8 +197,9 @@ public class DGCVerificationCenter {
             if types.contains(.shc) {
                 arrayTypes.append(.shc)
                 let inspector = SHCInspection()
-                self.inspectors.append(inspector)
                 self.shcInspector = inspector
+                let applicableInspector = ApplicableInspector(type: .shc, inspector: inspector)
+                self.applicableInspectors.append(applicableInspector)
             }
         #endif
 
@@ -205,9 +226,9 @@ public class DGCVerificationCenter {
     public func prepareStoredData(appType: AppType, completion: @escaping DataCompletionHandler) {
         let group = DispatchGroup()
         
-        for inspector in inspectors {
+        for applicant in applicableInspectors {
             group.enter()
-            inspector.prepareLocallyStoredData(appType: appType) { err in
+            applicant.inspector.prepareLocallyStoredData(appType: appType) { err in
                 group.leave()
             }
         }
@@ -219,9 +240,9 @@ public class DGCVerificationCenter {
     public func updateStoredData(appType: AppType, completion: @escaping DataCompletionHandler) {
         let group = DispatchGroup()
         
-        for inspector in inspectors {
+        for applicant in applicableInspectors {
             group.enter()
-            inspector.updateLocallyStoredData(appType: appType) { err in
+            applicant.inspector.updateLocallyStoredData(appType: appType) { err in
                 group.leave()
             }
         }
@@ -235,22 +256,18 @@ public class DGCVerificationCenter {
     public func validateCertificate(_ multiTypeCertificate: MultiTypeCertificate) -> VerifyingProtocol? {
         guard let certificate = multiTypeCertificate.digitalCertificate else { return nil }
         
+
         switch multiTypeCertificate.certificateType {
         case .dcc:
-            let dccVerification = dccInspector?.validateCertificate(certificate)
-            return dccVerification
+            return dccInspector?.validateCertificate(certificate)
         case .icao:
-            let icaoVerification = icaoInspector?.validateCertificate(certificate)
-            return icaoVerification
+            return icaoInspector?.validateCertificate(certificate)
         case .divoc:
-            let divocVerification = divocInspector?.validateCertificate(certificate)
-            return divocVerification
+            return divocInspector?.validateCertificate(certificate)
         case .vc:
-            let vcVerification = vcInspector?.validateCertificate(certificate)
-            return vcVerification
+            return vcInspector?.validateCertificate(certificate)
         case .shc:
-            let shcVerification = shcInspector?.validateCertificate(certificate)
-            return shcVerification
+            return shcInspector?.validateCertificate(certificate)
         }
     }
 }

@@ -44,5 +44,5 @@ public enum CertificateType: String {
             return "SMART Health Cards Data"
         }
     }
-
+    
 }
