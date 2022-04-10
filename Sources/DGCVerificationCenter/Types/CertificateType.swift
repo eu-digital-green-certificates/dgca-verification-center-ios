@@ -8,10 +8,25 @@
 
 import Foundation
 
-public enum CertificateType: Int {
+public enum CertificateType: String {
     case dcc
     case icao
     case divoc
     case vc
     case shc
+    
+    public var certificateDescription: String {
+        switch self {
+        case .dcc:
+            return "EU Digital COVID Certificate"
+        case .icao:
+            return "ICAO VDS COVID Certificate"
+        case .divoc:
+            return "DIVOC COVID Certificate"
+        case .vc:
+            return "Verifiable Credentials"
+        case .shc:
+            return "SMART Health Cards"
+        }
+    }
 }
