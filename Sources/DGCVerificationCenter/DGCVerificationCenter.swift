@@ -70,7 +70,7 @@ public class DGCVerificationCenter {
             let applicableInspector = ApplicableInspector(type: .divoc, inspector: inspector)
             self.applicableInspectors.append(applicableInspector)
         #endif
-
+        
         #if canImport(VCInspection)
             arrayTypes.append(.vc)
             let inspector = VCInspection()
@@ -78,7 +78,7 @@ public class DGCVerificationCenter {
             let applicableInspector = ApplicableInspector(type: .vc, inspector: inspector)
             self.applicableInspectors.append(applicableInspector)
         #endif
-
+        
         #if canImport(SCHInspection)
             arrayTypes.append(.shc)
             let inspector = SHCInspection()
