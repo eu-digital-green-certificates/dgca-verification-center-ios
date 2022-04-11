@@ -94,7 +94,6 @@ public class CertificateApplicant {
     }
     
     public static func isApplicableSHCFormat(payload: String) -> Bool {
-        let payloadString: String
         if doesSCHPreffixExist(payload) {
             return true
         } else {
