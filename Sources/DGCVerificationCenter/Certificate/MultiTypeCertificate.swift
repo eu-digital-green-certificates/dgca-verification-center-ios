@@ -110,7 +110,7 @@ public class MultiTypeCertificate {
             self.digitalCertificate = try? HCert(from: payload, ruleCountryCode: ruleCountryCode)
         #endif
         
-        } else if CertificateApplicant.isApplicableSHCFormat(payload: <#T##String#>)(payload: payload) {
+        } else if CertificateApplicant.isApplicableSHCFormat(payload: payload) {
             self.certificateType = .shc
         #if canImport(DGCSHInspection)
 			self.digitalCertificate = try? HCert(from: payload)
