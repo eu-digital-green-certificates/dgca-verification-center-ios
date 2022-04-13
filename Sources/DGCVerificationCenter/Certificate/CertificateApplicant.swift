@@ -64,7 +64,7 @@ public class CertificateApplicant {
         
         let cborData = ZLib.decompress(compressed)
         guard !cborData.isEmpty else { return false }
-        
+
         guard let headerStr = CBOR.header(from: cborData)?.toString(),
             let bodyStr = CBOR.payload(from: cborData)?.toString(),
             let kid = CBOR.kid(from: cborData)
