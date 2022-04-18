@@ -9,6 +9,7 @@ import ICAOInspection
 #endif
 #if canImport(DIVOCInspection)
 import DIVOCInspection
+import DGCSHInspection
 #endif
 
 public struct ApplicableInspector {
@@ -45,7 +46,7 @@ public class DGCVerificationCenter {
         // I added UIKit, because of there are no modules and UIKit alwas exists
         //
         // To imitate absense one of listed modules simple change name to supposed name
-        // Also cgange the name in directives in TestResultController
+        // Also change the name in directives in TestResultController
         
         #if canImport(DCCInspection)
             arrayTypes.append(.dcc)
@@ -81,7 +82,7 @@ public class DGCVerificationCenter {
         
         #if canImport(SCHInspection)
             arrayTypes.append(.shc)
-            let inspector = SHCInspection()
+            let inspector = SHInspection()
             self.shcInspector = inspector
             let applicableInspector = ApplicableInspector(type: .shc, inspector: inspector)
             self.applicableInspectors.append(applicableInspector)
