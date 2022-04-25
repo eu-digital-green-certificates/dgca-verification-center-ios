@@ -9,6 +9,8 @@ import ICAOInspection
 #endif
 #if canImport(DIVOCInspection)
 import DIVOCInspection
+#endif
+#if canImport(DGCSHInspection)
 import DGCSHInspection
 #endif
 
@@ -80,12 +82,12 @@ public class DGCVerificationCenter {
             self.applicableInspectors.append(applicableInspector)
         #endif
         
-        #if canImport(SCHInspection)
+        #if canImport(DGCSHInspection)
             arrayTypes.append(.shc)
-            let inspector = SHInspection()
-            self.shcInspector = inspector
-            let applicableInspector = ApplicableInspector(type: .shc, inspector: inspector)
-            self.applicableInspectors.append(applicableInspector)
+            let shInspection = SHInspection()
+            self.shcInspector = shInspection
+            let shInspector = ApplicableInspector(type: .shc, inspector: shInspection)
+            self.applicableInspectors.append(shInspector)
             #endif
         
         self.applicableCertificateTypes = arrayTypes

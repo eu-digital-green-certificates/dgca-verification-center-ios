@@ -52,6 +52,12 @@ public class CertificateApplicant {
         return false
     }
     
+    private static func isJWTToken(_ payloadString: String?) -> Bool {
+        guard let payloadString = payloadString else { return false }
+        return payloadString.starts(with: "ey")
+
+    }
+    
     public static func isApplicableDCCFormat(payload: String) -> Bool {
         let payloadString: String
         if doesCH1PreffixExist(payload) {
@@ -97,7 +103,7 @@ public class CertificateApplicant {
         if doesSCHPreffixExist(payload) {
             return true
         } else {
-            return false
+            return isJWTToken(payload)
         }
     }
 }

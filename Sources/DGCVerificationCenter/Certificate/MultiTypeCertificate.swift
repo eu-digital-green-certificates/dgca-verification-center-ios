@@ -81,8 +81,8 @@ public class MultiTypeCertificate {
     public var body: JSON? {
         digitalCertificate?.body
     }
-
-    public init?(from payload: String, ruleCountryCode: String? = nil) {
+    
+    public required init?(payload: String, ruleCountryCode: String? = nil) throws {
         self.ruleCountryCode = ruleCountryCode
         self.scannedDate = Date()
         
@@ -113,7 +113,46 @@ public class MultiTypeCertificate {
         } else if CertificateApplicant.isApplicableSHCFormat(payload: payload) {
             self.certificateType = .shc
         #if canImport(DGCSHInspection)
-			self.digitalCertificate = try? SHCert(payload: payload, ruleCountryCode: nil)
+            self.digitalCertificate = try SHCert(payload: payload, ruleCountryCode: nil) // call needs to throw
+        #endif
+        
+        } else {
+            return nil
+        }
+    }
+
+    public init?(from payload: String, ruleCountryCode: String? = nil) {
+        self.ruleCountryCode = ruleCountryCode
+        self.scannedDate = Date()
+        
+        if CertificateApplicant.isApplicableDCCFormat(payload: payload) {
+            self.certificateType = .dcc
+        #if canImport(DCCInspection)
+			self.digitalCertificate = try? HCert(payload: payload, ruleCountryCode: ruleCountryCode)
+        #endif
+        
+        } else if CertificateApplicant.isApplicableICAOFormat(payload: payload) {
+            self.certificateType = .icao
+        #if canImport(ICAOInspection)
+            self.digitalCertificate = try? HCert(from: payload, ruleCountryCode: ruleCountryCode)
+        #endif
+        
+        } else if CertificateApplicant.isApplicableDIVOCFormat(payload: payload) {
+            self.certificateType = .divoc
+        #if canImport(DIVOCInspection)
+            self.digitalCertificate = try? HCert(from: payload, ruleCountryCode: ruleCountryCode)
+        #endif
+        
+        } else if CertificateApplicant.isApplicableDIVOCFormat(payload: payload) {
+            self.certificateType = .divoc
+        #if canImport(VCInspection)
+            self.digitalCertificate = try? HCert(from: payload, ruleCountryCode: ruleCountryCode)
+        #endif
+        
+        } else if CertificateApplicant.isApplicableSHCFormat(payload: payload) {
+            self.certificateType = .shc
+        #if canImport(DGCSHInspection)
+            self.digitalCertificate = try? SHCert(payload: payload, ruleCountryCode: nil)
         #endif
         
         } else {
