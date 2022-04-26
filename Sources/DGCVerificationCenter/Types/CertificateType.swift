@@ -13,7 +13,6 @@ public enum CertificateType: String {
     case dcc
     case icao
     case divoc
-    case vc
     case shc
     
     public var certificateDescription: String {
@@ -26,8 +25,6 @@ public enum CertificateType: String {
             return "ICAO VDS COVID Certificate"
         case .divoc:
             return "DIVOC COVID Certificate"
-        case .vc:
-            return "Verifiable Credentials"
         case .shc:
             return "SMART Health Cards"
         }
@@ -43,9 +40,7 @@ public enum CertificateType: String {
             return "ICAO Certificate Data"
         case .divoc:
             return "DIVOC Certificate Data"
-        case .vc:
-            return "Verifiable Credentials data"
-        case .shc:
+         case .shc:
             return "SMART Health Cards Data"
         }
     }

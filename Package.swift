@@ -9,10 +9,9 @@ let package = Package(
     
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
-        .library(
-            name: "DGCVerificationCenter",
-            targets: ["DGCVerificationCenter"]),
+        .library( name: "DGCVerificationCenter", targets: ["DGCVerificationCenter"]),
     ],
+    
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(name: "DCCInspection", url: "https://github.com/eu-digital-green-certificates/dgca-verification-dcc-inspection.git",
@@ -20,14 +19,13 @@ let package = Package(
         .package(name: "DGCSHInspection", url: "https://github.com/eu-digital-green-certificates/dgc-sh-inspection.git",
                 .branch("main")),
     ],
+    
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "DGCVerificationCenter",
-            dependencies: ["DCCInspection",
-                           "DGCSHInspection"
-                          ]),
+            dependencies: ["DCCInspection", "DGCSHInspection"]),
         .testTarget(
             name: "DGCVerificationCenterTests",
             dependencies: ["DGCVerificationCenter"]),

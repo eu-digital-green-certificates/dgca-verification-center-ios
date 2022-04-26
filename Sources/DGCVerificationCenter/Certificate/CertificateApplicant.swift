@@ -10,6 +10,7 @@ import DGCCoreLibrary
 import SwiftyJSON
 import SwiftCBOR
 
+
 enum ClaimKey: String {
   case hCert = "-260"
   case euDgcV1 = "1"
@@ -18,7 +19,8 @@ enum ClaimKey: String {
 public class CertificateApplicant {
     private static let supportedDCCPrefixes = [ "HC1:" ]
     private static let supportedSHCPrefixes = [ "shc:/" ]
-
+    private static let supportedSHCPrefix = "shc:/"
+    
     // MARK: - DCC
     private static func doesCH1PreffixExist(_ payloadString: String?) -> Bool {
         guard let payloadString = payloadString  else { return false }
@@ -94,10 +96,43 @@ public class CertificateApplicant {
     }
     
     public static func isApplicableSHCFormat(payload: String) -> Bool {
-        if doesSCHPreffixExist(payload) {
-            return true
+        var barcode: String = payload
+        if !payload.starts(with: "ey") {
+            // is not JWT, do numeric decoding
+            guard let barcodeValue = schBuilder(payload: payload) else { return false }
+            barcode = barcodeValue
+        }
+        
+        let barcodeParts = barcode.split(separator: ".")
+        guard let header = String(barcodeParts[0]).base64UrlDecoded() else { return false }
+        
+        let payload = String(barcodeParts[1]).base64UrlToBase64()
+        guard let headerJson = try? JSONSerialization.jsonObject(with: header.data(using: .utf8)!,
+            options: []) as? [String: Any] else { return false }
+        var jsonData: Data
+        
+        if let algo = headerJson["zip"] as? String, algo == "DEF", let compressedData = Data(base64Encoded: payload) {
+            // use deflate
+        } else if let typ = headerJson["typ"] as? String, typ == "JWT", let jsonData = Data(base64Encoded: payload) {
+            // use jwt
         } else {
             return false
         }
+        
+        guard let _ = headerJson["kid"] as? String else { return false }
+        return true
+    }
+    
+    private static func schBuilder(payload: String) -> String? {
+        let rawBarcode = payload.replacingOccurrences(of: supportedSHCPrefix, with: "")
+        var numericCode: String = ""
+        var index = rawBarcode.startIndex
+        while numericCode.count <= (rawBarcode.count / 2) - 1 {
+            guard let numVal = Int(rawBarcode[index..<rawBarcode.index(index, offsetBy: 2)]) else { return nil }
+            
+            numericCode.append("\(UnicodeScalar(UInt8(numVal + 45)))")
+            index = rawBarcode.index(index, offsetBy: 2)
+        }
+        return numericCode
     }
 }

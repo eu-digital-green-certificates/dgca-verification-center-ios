@@ -11,6 +11,11 @@ import ICAOInspection
 import DIVOCInspection
 #endif
 
+#if canImport(DGCSHInspection)
+import DGCSHInspection
+#endif
+
+
 public struct ApplicableInspector {
     public let type: CertificateType
     public let inspector: CertificateInspection
@@ -28,8 +33,7 @@ public class DGCVerificationCenter {
     public var dccInspector: CertificateInspection?
     public var icaoInspector: CertificateInspection?
     public var divocInspector: CertificateInspection?
-    public var vcInspector: CertificateInspection?
-    public var shcInspector: CertificateInspection?
+     public var shcInspector: CertificateInspection?
 
     public var applicableInspectors: [ApplicableInspector] = []
     
@@ -49,42 +53,34 @@ public class DGCVerificationCenter {
         
         #if canImport(DCCInspection)
             arrayTypes.append(.dcc)
-            let inspector = DCCInspection()
-            self.dccInspector = inspector
-            let applicableInspector = ApplicableInspector(type: .dcc, inspector: inspector)
-            self.applicableInspectors.append(applicableInspector)
+            let digInspector = DCCInspection()
+            self.dccInspector = digInspector
+            let applicableDCCInspector = ApplicableInspector(type: .dcc, inspector: digInspector)
+            self.applicableInspectors.append(applicableDCCInspector)
         #endif
         
         #if canImport(ICAOInspection)
             arrayTypes.append(.icao)
-            let inspector = ICAOInspection()
-            self.icaoInspector = inspector
-            let applicableInspector = ApplicableInspector(type: .icao, inspector: inspector)
-            self.applicableInspectors.append(applicableInspector)
+            let icInspector = ICAOInspection()
+            self.icaoInspector = icInspector
+            let applicableICAOInspector = ApplicableInspector(type: .icao, inspector: icInspector)
+            self.applicableInspectors.append(applicableICAOInspector)
         #endif
         
         #if canImport(DIVOCInspection)
             arrayTypes.append(.divoc)
-            let inspector = DIVOCInspection()
-            self.icaoInspector = inspector
-            let applicableInspector = ApplicableInspector(type: .divoc, inspector: inspector)
-            self.applicableInspectors.append(applicableInspector)
+            let dvcInspector = DIVOCInspection()
+            self.divocInspector = dvcInspector
+            let applicableDIVInspector = ApplicableInspector(type: .divoc, inspector: dvcInspector)
+            self.applicableInspectors.append(applicableDIVInspector)
         #endif
-        
-        #if canImport(VCInspection)
-            arrayTypes.append(.vc)
-            let inspector = VCInspection()
-            self.vcInspector = inspector
-            let applicableInspector = ApplicableInspector(type: .vc, inspector: inspector)
-            self.applicableInspectors.append(applicableInspector)
-        #endif
-        
-        #if canImport(SCHInspection)
+                
+        #if canImport(DGCSHInspection)
             arrayTypes.append(.shc)
-            let inspector = SHCInspection()
-            self.shcInspector = inspector
-            let applicableInspector = ApplicableInspector(type: .shc, inspector: inspector)
-            self.applicableInspectors.append(applicableInspector)
+            let shInspector = DGCSHInspection()
+            self.shcInspector = shInspector
+            let applicableSHInspector = ApplicableInspector(type: .shc, inspector: shInspector)
+            self.applicableInspectors.append(applicableSHInspector)
             #endif
         
         self.applicableCertificateTypes = arrayTypes
@@ -122,21 +118,11 @@ public class DGCVerificationCenter {
                 self.applicableInspectors.append(applicableInspector)
             }
         #endif
-        
-        #if canImport(VCInspection)
-            if types.contains(.vc) {
-                arrayTypes.append(.vc)
-                let inspector = VCInspection()
-                self.vcInspector = inspector
-                let applicableInspector = ApplicableInspector(type: .vc, inspector: inspector)
-                self.applicableInspectors.append(applicableInspector)
-            }
-        #endif
-        
-        #if canImport(SCHInspection)
+                
+        #if canImport(DGCSHInspection)
             if types.contains(.shc) {
                 arrayTypes.append(.shc)
-                let inspector = SHCInspection()
+                let inspector = DGCSHInspection()
                 self.shcInspector = inspector
                 let applicableInspector = ApplicableInspector(type: .shc, inspector: inspector)
                 self.applicableInspectors.append(applicableInspector)
@@ -183,20 +169,11 @@ public class DGCVerificationCenter {
 
             }
         #endif
-        #if canImport(VCInspection)
-            if types.contains(.vc) {
-                arrayTypes.append(.vc)
-                let inspector = VCInspection()
-                self.vcInspector = inspector
-                let applicableInspector = ApplicableInspector(type: .vc, inspector: inspector)
-                self.applicableInspectors.append(applicableInspector)
-            }
-        #endif
 
-        #if canImport(SCHInspection)
-            if types.contains(.shc) {
+        #if canImport(DGCSHInspection)
+            if type == .shc {
                 arrayTypes.append(.shc)
-                let inspector = SHCInspection()
+                let inspector = DGCSHInspection()
                 self.shcInspector = inspector
                 let applicableInspector = ApplicableInspector(type: .shc, inspector: inspector)
                 self.applicableInspectors.append(applicableInspector)
@@ -265,8 +242,6 @@ public class DGCVerificationCenter {
             return icaoInspector?.validateCertificate(certificate)
         case .divoc:
             return divocInspector?.validateCertificate(certificate)
-        case .vc:
-            return vcInspector?.validateCertificate(certificate)
         case .shc:
             return shcInspector?.validateCertificate(certificate)
         }
