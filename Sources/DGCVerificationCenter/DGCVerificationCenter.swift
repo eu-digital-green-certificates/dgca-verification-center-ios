@@ -253,10 +253,9 @@ public class DGCVerificationCenter {
     
     // MARK: - Verifying
     
-    public func validateCertificate(_ multiTypeCertificate: MultiTypeCertificate) -> VerifyingProtocol? {
+    public func validateCertificate(_ multiTypeCertificate: MultiTypeCertificate) -> ValidityState? {
         guard let certificate = multiTypeCertificate.digitalCertificate else { return nil }
         
-
         switch multiTypeCertificate.certificateType {
         case .dcc:
             return dccInspector?.validateCertificate(certificate)

@@ -15,14 +15,19 @@ let package = Package(
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(name: "DCCInspection", url: "https://github.com/eu-digital-green-certificates/dgca-verification-dcc-inspection.git", .branch("main")),
+        .package(name: "DCCInspection", url: "https://github.com/eu-digital-green-certificates/dgca-verification-dcc-inspection.git",
+                .branch("main")),
+        .package(name: "DGCSHInspection", url: "https://github.com/eu-digital-green-certificates/dgc-sh-inspection.git",
+                .branch("main")),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "DGCVerificationCenter",
-            dependencies: ["DCCInspection"]),
+            dependencies: ["DCCInspection",
+                           "DGCSHInspection"
+                          ]),
         .testTarget(
             name: "DGCVerificationCenterTests",
             dependencies: ["DGCVerificationCenter"]),
