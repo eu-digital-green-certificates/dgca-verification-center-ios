@@ -9,6 +9,7 @@
 import Foundation
 
 public enum CertificateType: String {
+    case unknown
     case dcc
     case icao
     case divoc
@@ -17,6 +18,8 @@ public enum CertificateType: String {
     
     public var certificateDescription: String {
         switch self {
+        case .unknown:
+            return "Unknown Certificate Type"
         case .dcc:
             return "EU Digital COVID Certificate"
         case .icao:
@@ -32,6 +35,8 @@ public enum CertificateType: String {
     
     public var certificateTaskDescription: String {
         switch self {
+        case .unknown:
+            return "Unknown Certificate Type"
         case .dcc:
             return "Trusted Public keys and Revocation Data"
         case .icao:

@@ -257,6 +257,8 @@ public class DGCVerificationCenter {
         guard let certificate = multiTypeCertificate.digitalCertificate else { return nil }
         
         switch multiTypeCertificate.certificateType {
+        case .unknown:
+            return nil
         case .dcc:
             return dccInspector?.validateCertificate(certificate)
         case .icao:
