@@ -82,13 +82,14 @@ public class MultiTypeCertificate {
         digitalCertificate?.body
     }
 
-    public init?(from payload: String, ruleCountryCode: String? = nil) throws {
+    public init(from payload: String, ruleCountryCode: String? = nil) throws {
         self.ruleCountryCode = ruleCountryCode
         self.scannedDate = Date()
         
         if CertificateApplicant.isApplicableDCCFormat(payload: payload) {
-            self.certificateType = .dcc
         #if canImport(DCCInspection)
+            self.certificateType = .dcc
+
             do {
                 self.digitalCertificate = try HCert(payload: payload, ruleCountryCode: ruleCountryCode)
             } catch let error {
@@ -97,26 +98,26 @@ public class MultiTypeCertificate {
         #endif
         
         } else if CertificateApplicant.isApplicableICAOFormat(payload: payload) {
-            self.certificateType = .icao
         #if canImport(ICAOInspection)
+            self.certificateType = .icao
             self.digitalCertificate = try? HCert(from: payload, ruleCountryCode: ruleCountryCode)
         #endif
         
         } else if CertificateApplicant.isApplicableDIVOCFormat(payload: payload) {
-            self.certificateType = .divoc
         #if canImport(DIVOCInspection)
+            self.certificateType = .divoc
             self.digitalCertificate = try? HCert(from: payload, ruleCountryCode: ruleCountryCode)
         #endif
         
         } else if CertificateApplicant.isApplicableDIVOCFormat(payload: payload) {
-            self.certificateType = .divoc
         #if canImport(VCInspection)
+            self.certificateType = .divoc
             self.digitalCertificate = try? HCert(from: payload, ruleCountryCode: ruleCountryCode)
         #endif
         
         } else if CertificateApplicant.isApplicableSHCFormat(payload: payload) {
-            self.certificateType = .shc
         #if canImport(DGCSHInspection)
+            self.certificateType = .shc
             do {
                 self.digitalCertificate = try SHCert(payload: payload)
             } catch let error {
@@ -125,7 +126,7 @@ public class MultiTypeCertificate {
         #endif
         
         } else {
-            return nil
+            throw CertificateParsingError.unknown
         }
     }
     
