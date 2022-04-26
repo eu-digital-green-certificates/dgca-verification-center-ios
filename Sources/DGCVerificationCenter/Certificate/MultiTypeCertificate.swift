@@ -82,14 +82,18 @@ public class MultiTypeCertificate {
         digitalCertificate?.body
     }
 
-    public init?(from payload: String, ruleCountryCode: String? = nil) {
+    public init?(from payload: String, ruleCountryCode: String? = nil) throws {
         self.ruleCountryCode = ruleCountryCode
         self.scannedDate = Date()
         
         if CertificateApplicant.isApplicableDCCFormat(payload: payload) {
             self.certificateType = .dcc
         #if canImport(DCCInspection)
-            self.digitalCertificate = try? HCert(payload: payload, ruleCountryCode: ruleCountryCode)
+            do {
+                self.digitalCertificate = try HCert(payload: payload, ruleCountryCode: ruleCountryCode)
+            } catch let error {
+                throw error
+            }
         #endif
         
         } else if CertificateApplicant.isApplicableICAOFormat(payload: payload) {
@@ -113,7 +117,11 @@ public class MultiTypeCertificate {
         } else if CertificateApplicant.isApplicableSHCFormat(payload: payload) {
             self.certificateType = .shc
         #if canImport(DGCSHInspection)
-			self.digitalCertificate = try? SHCert(payload: payload)
+            do {
+                self.digitalCertificate = try SHCert(payload: payload)
+            } catch let error {
+                throw error
+            }
         #endif
         
         } else {
