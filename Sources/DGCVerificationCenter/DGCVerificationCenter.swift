@@ -33,7 +33,7 @@ public class DGCVerificationCenter {
     public var dccInspector: CertificateInspection?
     public var icaoInspector: CertificateInspection?
     public var divocInspector: CertificateInspection?
-     public var shcInspector: CertificateInspection?
+    public var shcInspector: CertificateInspection?
 
     public var applicableInspectors: [ApplicableInspector] = []
     

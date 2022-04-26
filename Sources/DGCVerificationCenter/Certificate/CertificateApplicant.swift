@@ -109,7 +109,6 @@ public class CertificateApplicant {
         let payload = String(barcodeParts[1]).base64UrlToBase64()
         guard let headerJson = try? JSONSerialization.jsonObject(with: header.data(using: .utf8)!,
             options: []) as? [String: Any] else { return false }
-        var jsonData: Data
         
         if let algo = headerJson["zip"] as? String, algo == "DEF", let compressedData = Data(base64Encoded: payload) {
             // use deflate
