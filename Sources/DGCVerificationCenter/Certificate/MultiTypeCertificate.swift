@@ -116,7 +116,7 @@ public class MultiTypeCertificate {
             #endif
         
         } else {
-            throw CertificateParsingError.unknown
+            throw CertificateParsingError.unknownFormat
         }
     }
     
