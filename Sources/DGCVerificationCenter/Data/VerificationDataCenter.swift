@@ -5,7 +5,7 @@
 //  Created by Igor Khomiak on 01.04.2022.
 //
 
-import UIKit
+import Foundation
 
 public class VerificationDataCenter {
 
