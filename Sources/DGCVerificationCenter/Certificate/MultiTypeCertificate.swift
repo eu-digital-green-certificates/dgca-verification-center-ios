@@ -77,11 +77,11 @@ public class MultiTypeCertificate {
     public var signatureHash: Data? {
         digitalCertificate?.signatureHash
     }
-
+    
     public var body: JSON? {
         digitalCertificate?.body
     }
-
+    
     public init(from payload: String, ruleCountryCode: String? = nil) throws {
         self.ruleCountryCode = ruleCountryCode
         self.scannedDate = Date()
