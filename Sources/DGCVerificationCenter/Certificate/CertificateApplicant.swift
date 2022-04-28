@@ -54,7 +54,7 @@ public class CertificateApplicant {
         return false
     }
     
-    public static func isApplocableVerifiebleFormat(payload: String) -> Bool {
+    public static func isApplicableFormatForVerification(payload: String) -> Bool {
         if isApplicableDCCFormat(payload: payload) ||
             isApplicableICAOFormat(payload: payload) ||
             isApplicableDIVOCFormat(payload: payload) ||
