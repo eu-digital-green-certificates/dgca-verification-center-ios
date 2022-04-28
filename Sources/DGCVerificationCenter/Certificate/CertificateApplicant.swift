@@ -54,6 +54,17 @@ public class CertificateApplicant {
         return false
     }
     
+    public static func isApplocableVerifiebleFormat(payload: String) -> Bool {
+        if isApplicableDCCFormat(payload: payload) ||
+            isApplicableICAOFormat(payload: payload) ||
+            isApplicableDIVOCFormat(payload: payload) ||
+            isApplicableSHCFormat(payload: payload) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     public static func isApplicableDCCFormat(payload: String) -> Bool {
         let payloadString: String
         if doesCH1PreffixExist(payload) {
@@ -110,9 +121,9 @@ public class CertificateApplicant {
         guard let headerJson = try? JSONSerialization.jsonObject(with: header.data(using: .utf8)!,
             options: []) as? [String: Any] else { return false }
         
-        if let algo = headerJson["zip"] as? String, algo == "DEF", let compressedData = Data(base64Encoded: payload) {
+        if let algo = headerJson["zip"] as? String, algo == "DEF", let _ = Data(base64Encoded: payload) {
             // use deflate
-        } else if let typ = headerJson["typ"] as? String, typ == "JWT", let jsonData = Data(base64Encoded: payload) {
+        } else if let typ = headerJson["typ"] as? String, typ == "JWT", let _ = Data(base64Encoded: payload) {
             // use jwt
         } else {
             return false

@@ -28,15 +28,6 @@ public class DGCVerificationCenter {
         public static let linkToOopenEuCertDoc = "https://ec.europa.eu/health/ehealth/covid-19_en"
     }
     
-    public let applicableCertificateTypes: [CertificateType]
-    
-    public var dccInspector: CertificateInspection?
-    public var icaoInspector: CertificateInspection?
-    public var divocInspector: CertificateInspection?
-    public var shcInspector: CertificateInspection?
-
-    public var applicableInspectors: [ApplicableInspector] = []
-    
     public static var countryCodes: [CountryModel] {
         get {
             #if canImport(DCCInspection)
@@ -47,16 +38,24 @@ public class DGCVerificationCenter {
         }
     }
 
+    public let applicableCertificateTypes: [CertificateType]
+    
+    public var dccInspector: CertificateInspection?
+    public var icaoInspector: CertificateInspection?
+    public var divocInspector: CertificateInspection?
+    public var shcInspector: CertificateInspection?
+
+    public var applicableInspectors: [ApplicableInspector] = []
+    
     public init() {
         var arrayTypes = [CertificateType] ()
         
         // In reality all Verification Processors will be packed to separated modules
         // and imported to the developed project
         // To check availability of module we will simple use compilator directive
-        // #if canImport(ModleName), f.e for "Integer" processor
+        // #if canImport(ModuleName), f.e for "Integer" processor
         // #if canImport(IntegerProcessor)
         // where IntegerProcessor - is an external module of SDK
-        // I added UIKit, because of there are no modules and UIKit alwas exists
         //
         // To imitate absense one of listed modules simple change name to supposed name
         // Also cgange the name in directives in TestResultController
