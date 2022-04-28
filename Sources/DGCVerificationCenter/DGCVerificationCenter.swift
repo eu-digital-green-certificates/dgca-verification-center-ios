@@ -40,6 +40,16 @@ public class DGCVerificationCenter {
 
     public var applicableInspectors: [ApplicableInspector] = []
     
+    public static var countryCodes: [CountryModel] {
+        get {
+            #if canImport(DCCInspection)
+            return DCCDataCenter.countryCodes.sorted(by: { $0.name < $1.name })
+            #else
+            return []
+            #endif
+        }
+    }
+
     public init() {
         var arrayTypes = [CertificateType] ()
         
