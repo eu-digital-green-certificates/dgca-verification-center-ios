@@ -23,6 +23,8 @@ public struct ApplicableInspector {
 
 public class DGCVerificationCenter {
 
+    public static let shared = DGCVerificationCenter()
+    
     public struct SharedLinks {
         public static let linkToOpenGitHubSource = "https://github.com/eu-digital-green-certificates"
         public static let linkToOopenEuCertDoc = "https://ec.europa.eu/health/ehealth/covid-19_en"
