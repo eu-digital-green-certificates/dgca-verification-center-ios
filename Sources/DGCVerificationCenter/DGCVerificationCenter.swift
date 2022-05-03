@@ -21,10 +21,22 @@ public struct ApplicableInspector {
     public let inspector: CertificateInspection
 }
 
+struct Constants {
+    static let lastFetchKey = "lastFetchKey"
+    static let lastLaunchedAppVersionKey = "lastLaunchedAppVersionKey"
+}
+
 public class DGCVerificationCenter {
 
     public static let shared = DGCVerificationCenter()
-    
+    private static let expiredDataInterval: TimeInterval = 12.0 * 60 * 60
+
+    static var appVersion: String {
+        let versionValue = (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "1.0"
+        let buildNumValue = (Bundle.main.infoDictionary?["CFBundleVersion"] as? String) ?? "1.0"
+        return "\(versionValue)(\(buildNumValue))"
+    }
+
     public struct SharedLinks {
         public static let linkToOpenGitHubSource = "https://github.com/eu-digital-green-certificates"
         public static let linkToOopenEuCertDoc = "https://ec.europa.eu/health/ehealth/covid-19_en"
