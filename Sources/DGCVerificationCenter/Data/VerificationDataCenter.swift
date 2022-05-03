@@ -17,34 +17,8 @@ public class VerificationDataCenter {
     private static let expiredDataInterval: TimeInterval = 12.0 * 60 * 60
     
     static var appVersion: String {
-        let versionValue = (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "?.?.?"
-        let buildNumValue = (Bundle.main.infoDictionary?["CFBundleVersion"] as? String) ?? "?.?.?"
+        let versionValue = (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "1.0"
+        let buildNumValue = (Bundle.main.infoDictionary?["CFBundleVersion"] as? String) ?? "1.0"
         return "\(versionValue)(\(buildNumValue))"
-    }
-
-    public static var downloadedDataHasExpired: Bool {
-        return lastFetch.timeIntervalSinceNow < -expiredDataInterval
-    }
-    
-    public static var lastFetch: Date {
-        get {
-            return UserDefaults.standard.object(forKey: Constants.lastFetchKey) as? Date ?? Date.distantPast
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: Constants.lastFetchKey)
-        }
-    }
-
-    public static var appWasRunWithOlderVersion: Bool {
-        return lastLaunchedAppVersion != appVersion
-    }
-    
-    public static var lastLaunchedAppVersion: String {
-        get {
-            return UserDefaults.standard.string(forKey: Constants.lastLaunchedAppVersionKey) ?? ""
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: Constants.lastLaunchedAppVersionKey)
-        }
     }
 }
