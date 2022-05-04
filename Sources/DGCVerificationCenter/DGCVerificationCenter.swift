@@ -24,21 +24,26 @@ public struct ApplicableInspector {
     public let inspector: CertificateInspection
 }
 
+struct Constants {
+    static let lastFetchKey = "lastFetchKey"
+    static let lastLaunchedAppVersionKey = "lastLaunchedAppVersionKey"
+}
+
 public class DGCVerificationCenter {
+
+    public static let shared = DGCVerificationCenter()
+    private static let expiredDataInterval: TimeInterval = 12.0 * 60 * 60
+
+    public static var appVersion: String {
+        let versionValue = (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "1.0"
+        let buildNumValue = (Bundle.main.infoDictionary?["CFBundleVersion"] as? String) ?? "1.0"
+        return "\(versionValue)(\(buildNumValue))"
+    }
 
     public struct SharedLinks {
         public static let linkToOpenGitHubSource = "https://github.com/eu-digital-green-certificates"
         public static let linkToOopenEuCertDoc = "https://ec.europa.eu/health/ehealth/covid-19_en"
     }
-    
-    public let applicableCertificateTypes: [CertificateType]
-    
-    public var dccInspector: CertificateInspection?
-    public var icaoInspector: CertificateInspection?
-    public var divocInspector: CertificateInspection?
-    public var shcInspector: CertificateInspection?
-
-    public var applicableInspectors: [ApplicableInspector] = []
     
     public static var countryCodes: [CountryModel] {
         get {
@@ -50,16 +55,24 @@ public class DGCVerificationCenter {
         }
     }
 
+    public let applicableCertificateTypes: [CertificateType]
+    
+    public var dccInspector: CertificateInspection?
+    public var icaoInspector: CertificateInspection?
+    public var divocInspector: CertificateInspection?
+    public var shcInspector: CertificateInspection?
+
+    public var applicableInspectors: [ApplicableInspector] = []
+    
     public init() {
         var arrayTypes = [CertificateType] ()
         
         // In reality all Verification Processors will be packed to separated modules
         // and imported to the developed project
         // To check availability of module we will simple use compilator directive
-        // #if canImport(ModleName), f.e for "Integer" processor
+        // #if canImport(ModuleName), f.e for "Integer" processor
         // #if canImport(IntegerProcessor)
         // where IntegerProcessor - is an external module of SDK
-        // I added UIKit, because of there are no modules and UIKit alwas exists
         //
         // To imitate absense one of listed modules simple change name to supposed name
         // Also change the name in directives in TestResultController
