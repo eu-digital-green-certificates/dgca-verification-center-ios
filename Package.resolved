@@ -78,7 +78,7 @@
         "repositoryURL": "https://github.com/eu-digital-green-certificates/dgc-sh-inspection.git",
         "state": {
           "branch": "main",
-          "revision": "c3fe4060e96298b79838b4b14425cf06129c40b1",
+          "revision": "2fb100053b88ab48add745b68805f2e322dc92cf",
           "version": null
         }
       },
@@ -105,7 +105,7 @@
         "repositoryURL": "https://github.com/eu-digital-green-certificates/dgca-verification-dcc-inspection.git",
         "state": {
           "branch": "main",
-          "revision": "1dd557cfd41076ea4433aac8a20e57f64e044f12",
+          "revision": "52c86c57595a935decb0613f39166e9295a4cd11",
           "version": null
         }
       },
@@ -114,17 +114,26 @@
         "repositoryURL": "https://github.com/KittyMac/Hitch.git",
         "state": {
           "branch": null,
-          "revision": "587d48f17738151436826759dd6c15668efd67b1",
-          "version": "0.4.31"
+          "revision": "a87e8c73413999396761c441e64f27ac13da40a4",
+          "version": "0.4.32"
+        }
+      },
+      {
+        "package": "JOSESwift",
+        "repositoryURL": "https://github.com/airsidemobile/JOSESwift.git",
+        "state": {
+          "branch": "master",
+          "revision": "6db0244a2bc69807a397f7bcef417924e51551b3",
+          "version": null
         }
       },
       {
         "package": "jsonlogic",
         "repositoryURL": "https://github.com/eu-digital-green-certificates/json-logic-swift.git",
         "state": {
-          "branch": "feat/dccDateOfBirth",
-          "revision": "948c4c820f9c36dad2149c05b4e2dd1cc1ef3b3f",
-          "version": null
+          "branch": null,
+          "revision": "c830f34a35753f4d441bd291e40e4a4feee9ede0",
+          "version": "1.1.9"
         }
       },
       {
@@ -159,7 +168,7 @@
         "repositoryURL": "https://github.com/KittyMac/Sextant.git",
         "state": {
           "branch": "main",
-          "revision": "68b1db52653d39dd18a4aab19d728e598d4e4c92",
+          "revision": "fd0c386e254698964045e34747485ceb3704aa61",
           "version": null
         }
       },
@@ -168,8 +177,8 @@
         "repositoryURL": "https://github.com/KittyMac/Spanker.git",
         "state": {
           "branch": null,
-          "revision": "40c000b10b08cc9d1fb777827d35767048493fb4",
-          "version": "0.2.21"
+          "revision": "1f744093842a36730be0914c4620750f1af9fccf",
+          "version": "0.2.22"
         }
       },
       {
