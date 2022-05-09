@@ -14,9 +14,9 @@ let package = Package(
     
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(name: "DCCInspection", url: "https://github.com/eu-digital-green-certificates/dgca-verification-dcc-inspection.git",
+        .package(name: "DCCInspection", url: "https://github.com/eu-digital-green-certificates/dgca-verification-dcc-inspection-ios.git",
                 .branch("main")),
-        .package(name: "DGCSHInspection", url: "https://github.com/eu-digital-green-certificates/dgc-sh-inspection.git",
+        .package(name: "DGCSHInspection", url: "https://github.com/eu-digital-green-certificates/dgc-sh-inspection-ios.git",
                 .branch("main")),
     ],
     
