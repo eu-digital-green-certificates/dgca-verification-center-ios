@@ -58,7 +58,11 @@ public class MultiTypeCertificate {
     public var isRevoked: Bool {
         digitalCertificate?.isRevoked ?? false
     }
-            
+    
+    public var isUntrusted: Bool {
+        digitalCertificate?.isUntrusted ?? false
+    }
+
     public var certHash: String {
         digitalCertificate?.certHash ?? ""
     }
