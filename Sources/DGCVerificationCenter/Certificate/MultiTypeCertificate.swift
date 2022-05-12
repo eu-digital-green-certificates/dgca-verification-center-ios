@@ -131,5 +131,6 @@ public class MultiTypeCertificate {
         self.certificateType = type
         self.digitalCertificate = certificate
         self.scannedDate = scannedDate
+        self.storedTan = storedTan
     }
 }
