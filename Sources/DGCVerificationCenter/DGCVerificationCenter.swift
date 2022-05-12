@@ -10,6 +10,9 @@ import ICAOInspection
 #if canImport(DIVOCInspection)
 import DIVOCInspection
 #endif
+#if canImport(DGCSHInspection)
+import DGCSHInspection
+#endif
 
 #if canImport(DGCSHInspection)
 import DGCSHInspection
@@ -70,7 +73,7 @@ public class DGCVerificationCenter {
         // #if canImport(ModuleName)
         //
         // To imitate absense one of listed modules simple change name to supposed name
-        // Also cgange the name in directives in TestResultController
+        // Also change the name in directives in TestResultController
         
         #if canImport(DCCInspection)
             arrayTypes.append(.dcc)

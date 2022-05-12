@@ -111,6 +111,8 @@ public class MultiTypeCertificate {
         
         } else if CertificateApplicant.isApplicableSHCFormat(payload: payload) {
             self.certificateType = .shc
+        #if canImport(DGCSHInspection)
+        #endif
             #if canImport(DGCSHInspection)
                 do {
                     self.digitalCertificate = try SHCert(payload: payload)
@@ -129,5 +131,6 @@ public class MultiTypeCertificate {
         self.certificateType = type
         self.digitalCertificate = certificate
         self.scannedDate = scannedDate
+        self.storedTan = storedTan
     }
 }

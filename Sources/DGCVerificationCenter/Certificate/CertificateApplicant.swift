@@ -54,6 +54,12 @@ public class CertificateApplicant {
         return false
     }
     
+    private static func isJWTToken(_ payloadString: String?) -> Bool {
+        guard let payloadString = payloadString else { return false }
+        return payloadString.starts(with: "ey")
+
+    }
+    
     public static func isApplicableFormatForVerification(payload: String) -> Bool {
         if isApplicableDCCFormat(payload: payload) ||
             isApplicableICAOFormat(payload: payload) ||
@@ -126,7 +132,7 @@ public class CertificateApplicant {
         } else if let typ = headerJson["typ"] as? String, typ == "JWT", let _ = Data(base64Encoded: payload) {
             // use jwt
         } else {
-            return false
+            return isJWTToken(payload)
         }
         
         guard let _ = headerJson["kid"] as? String else { return false }
