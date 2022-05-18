@@ -84,7 +84,7 @@ public class MultiTypeCertificate {
     }
 
     public var certificateCreationDate: String {
-      digitalCertificate?.certificateCreationDate
+      digitalCertificate?.certificateCreationDate ?? ""
     }
     
     public init(from payload: String, ruleCountryCode: String? = nil) throws {
