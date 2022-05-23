@@ -41,19 +41,29 @@ On the next layer are row of verification inspectors. Now SDK includes two DCC a
 The third layer contains Core library where are incapsulated common servises such as encryption, sighning. zipping, etc.
 The auxiliary layer contains auxiliary modules that is used by second and thitd layers. There are JSON and Cert Logic, Bloom and Hash filters and row of third part libraries.
 
-   public enum CertificateType: Int {
-      case unknown
-      case dcc
-      case icao
-      case divoc
-      case shc
-   }
+## API 
+   public enum CertificateType: String {case unknown, dcc, icao, divoc, shc }
+
+### Initialization
 
    public init()
 
    public init?(types: [CertificateType])
 
    public init?(type: CertificateType)
+
+### Applicable types
+
+   public let applicableCertificateTypes: [CertificateType]
+
+   public static func isApplicableFormat(payload: String) -> Bool
+   
+   ### Veryfication
+   
+   public var verificationInspectior: CertificateInspection?
+   
+   public func isVerifiableCertificateType(_ type: CertificateType) -> Bool
+
 
 ### Prerequisites
 
