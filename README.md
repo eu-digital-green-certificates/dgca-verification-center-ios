@@ -28,9 +28,11 @@
 
 This repository contains the source code of the EU Digital COVID Certificate Verification Center Module for IOS. 
 
-This module encapsulates the available modules for the QR verification process (e.g. DCC, SHC). The verification process can be enhanced by importing new modules during the build. 
+This module encapsulates the available modules for the QR verification process (e.g. DCC, SHC). Available modules are DCC and SHC inspectors and core module.
+The verification process for new types of certificates can be extended by creating new modules of inspectors. Inspectors are independent and may be included or excluded at any time.
 
 ## Development
+To start using the Verification SDK it is enough to connect this package only to the app or to another module.
 
 ### Prerequisites
 
