@@ -35,7 +35,11 @@ The verification process for new types of certificates can be extended by creati
 ## Development
 To start using the Verification SDK it is enough to connect this package to the app or to another module.
 
-![Uploading image.png…]()
+The SDK is 4 layers softvare.
+This Verification module is on a top layer. The properties and methods in this layer are the API.
+On the next layer are row of verification inspectors. Now SDK includes two DCC and SHC inspectors.
+The third layer contains Core library where are incapsulated common servises such as encryption, sighning. zipping, etc.
+The auxiliary layer contains auxiliary modules that is used by second and thitd layers. There are JSON and Cert Logic, Bloom and Hash filters and row of third part libraries.
 
 ### Prerequisites
 
