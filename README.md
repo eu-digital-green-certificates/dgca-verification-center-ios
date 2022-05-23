@@ -71,10 +71,13 @@ The auxiliary layer contains auxiliary modules that is used by second and thitd 
 ### MultiTypeCertificate
 
 public class MultiTypeCertificate {
+
     public let certificateType: CertificateType
+    
     public let ruleCountryCode: String?
     
     public let scannedDate: Date
+    
     public var storedTan: String?
     
     public var digitalCertificate: CertificationProtocol?
@@ -106,7 +109,9 @@ public class MultiTypeCertificate {
     public var body: JSON? 
 
     public var certificateCreationDate: String 
+    
  }
+ 
 ### Prerequisites
 
 Create an new inspection module and add it to the imports by importing it [here](https://github.com/eu-digital-green-certificates/dgca-verification-center-ios/blob/main/Sources/DGCVerificationCenter/DGCVerificationCenter.swift#L66)
