@@ -56,15 +56,57 @@ The auxiliary layer contains auxiliary modules that is used by second and thitd 
 
    public let applicableCertificateTypes: [CertificateType]
 
-   public static func isApplicableFormat(payload: String) -> Bool
+   public static func isApplicableFormatForVerification(payload: String) -> Bool
    
-   ### Veryfication
+### Veryfication
    
    public var verificationInspectior: CertificateInspection?
    
    public func isVerifiableCertificateType(_ type: CertificateType) -> Bool
 
+   public static func isApplicableDCCFormat(payload: String) -> Bool
+   
+   public static func isApplicableSHCFormat(payload: String) -> Bool
+   
+### MultiTypeCertificate
 
+public class MultiTypeCertificate {
+    public let certificateType: CertificateType
+    public let ruleCountryCode: String?
+    
+    public let scannedDate: Date
+    public var storedTan: String?
+    
+    public var digitalCertificate: CertificationProtocol?
+    
+    public var firstName: String 
+    
+    public var firstNameStandardized: String? 
+    
+    public var lastName: String 
+    
+    public var lastNameStandardized: String 
+
+    public var fullName: String 
+    
+    public var certTypeString: String
+
+    public var isRevoked: Bool 
+    
+    public var isUntrusted: Bool 
+
+    public var certHash: String 
+    
+    public var uvciHash: Data? 
+    
+    public var countryCodeUvciHash: Data?
+    
+    public var signatureHash: Data? 
+    
+    public var body: JSON? 
+
+    public var certificateCreationDate: String 
+ }
 ### Prerequisites
 
 Create an new inspection module and add it to the imports by importing it [here](https://github.com/eu-digital-green-certificates/dgca-verification-center-ios/blob/main/Sources/DGCVerificationCenter/DGCVerificationCenter.swift#L66)
