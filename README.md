@@ -35,6 +35,7 @@ The verification process for new types of certificates can be extended by creati
 ## Development
 To start using the Verification SDK it is enough to connect this package to the app or to another module.
 
+![Uploading image.png…]()
 
 ### Prerequisites
 
