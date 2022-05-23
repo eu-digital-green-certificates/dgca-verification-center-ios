@@ -41,6 +41,20 @@ On the next layer are row of verification inspectors. Now SDK includes two DCC a
 The third layer contains Core library where are incapsulated common servises such as encryption, sighning. zipping, etc.
 The auxiliary layer contains auxiliary modules that is used by second and thitd layers. There are JSON and Cert Logic, Bloom and Hash filters and row of third part libraries.
 
+   public enum CertificateType: Int {
+      case unknown
+      case dcc
+      case icao
+      case divoc
+      case shc
+   }
+
+   public init()
+
+   public init?(types: [CertificateType])
+
+   public init?(type: CertificateType)
+
 ### Prerequisites
 
 Create an new inspection module and add it to the imports by importing it [here](https://github.com/eu-digital-green-certificates/dgca-verification-center-ios/blob/main/Sources/DGCVerificationCenter/DGCVerificationCenter.swift#L66)
