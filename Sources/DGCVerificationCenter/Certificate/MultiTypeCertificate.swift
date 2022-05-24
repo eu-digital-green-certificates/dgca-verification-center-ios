@@ -79,6 +79,10 @@ public class MultiTypeCertificate {
     public var body: JSON? {
         digitalCertificate?.body
     }
+
+    public var certificateCreationDate: String {
+      digitalCertificate?.certificateCreationDate ?? ""
+    }
     
     public init(from payload: String, ruleCountryCode: String? = nil) throws {
         self.ruleCountryCode = ruleCountryCode
