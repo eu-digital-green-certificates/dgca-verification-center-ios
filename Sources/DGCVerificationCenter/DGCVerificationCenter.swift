@@ -222,8 +222,8 @@ public class DGCVerificationCenter {
     
     // MARK: - Applicable Formats
 
-    public static func isApplicableFormat(payload: String) -> Bool {
-        CertificateApplicant.isApplicableFormatForVerification(payload: payload)
+    public func isApplicableFormat(payload: String) -> Bool {
+        return CertificateApplicant.isApplicableFormatForVerification(payload: payload)
     }
     
     public func isApplicableDCCFormat(payload: String) -> Bool {
