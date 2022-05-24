@@ -20,7 +20,7 @@ import DGCSHInspection
 
 public struct ApplicableInspector {
     public let type: CertificateType
-    public let inspector: CertificateInspecting & DataLoadingProtocol
+    public let inspector: CertificateValidating & DataLoadingProtocol
 }
 
 public struct SharedLinks {
@@ -50,9 +50,9 @@ public class DGCVerificationCenter {
     
     public let applicableCertificateTypes: [CertificateType]
     
-    public var dccInspector: CertificateInspecting & DataLoadingProtocol?
-    public var icaoInspector: CertificateInspecting & DataLoadingProtocol?
-    public var shcInspector: CertificateInspecting & DataLoadingProtocol?
+    public var dccInspector: (CertificateValidating & DataLoadingProtocol)?
+    public var icaoInspector: (CertificateValidating & DataLoadingProtocol)?
+    public var shcInspector: (CertificateValidating & DataLoadingProtocol)?
     
     public var applicableInspectors: [ApplicableInspector] = []
     
