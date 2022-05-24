@@ -35,16 +35,23 @@ The verification process for new types of certificates can be extended by creati
 ## Development
 To start using the Verification SDK it is enough to connect this package to the app or to another module.
 
+### Components
+
 The SDK is 4 layers softvare.
-This Verification module is on a top layer. The properties and methods in this layer are the API.
+This Verification Center module is on a top layer. The properties and methods in this layer are the API.
 On the next layer are row of verification inspectors. Now SDK includes two DCC and SHC inspectors.
 The third layer contains Core library where are incapsulated common servises such as encryption, sighning. zipping, etc.
 The auxiliary layer contains auxiliary modules that is used by second and thitd layers. There are JSON and Cert Logic, Bloom and Hash filters and row of third part libraries.
 
-## API 
-   public enum CertificateType: String {case unknown, dcc, icao, divoc, shc }
+### Verification Center API 
 
-### Initialization
+   public enum CertificateType: String { case unknown, dcc, icao, divoc, shc }
+   
+   public class DGCVerificationCenter
+   
+   CertificateType contains existed types of certificates (.dcc, .shc) and may contain non-existed types (.icao) that arenot added yet.
+   
+### Initialization of DGCVerificationCenter
 
    public init()
 
@@ -52,25 +59,49 @@ The auxiliary layer contains auxiliary modules that is used by second and thitd 
 
    public init?(type: CertificateType)
 
-### Applicable types
+### Applicable types of certificates
 
    public let applicableCertificateTypes: [CertificateType]
 
    public static func isApplicableFormatForVerification(payload: String) -> Bool
    
-### Veryfication
+   public static func isApplicableDCCFormat(payload: String) -> Bool
+   
+   public static func isApplicableSHCFormat(payload: String) -> Bool
+
+### Veryfication of certificates
    
    public var verificationInspectior: CertificateInspection?
    
    public func isVerifiableCertificateType(_ type: CertificateType) -> Bool
 
-   public static func isApplicableDCCFormat(payload: String) -> Bool
+   public func validateCertificate(_ multiTypeCertificate: MultiTypeCertificate) -> ValidityState?
    
-   public static func isApplicableSHCFormat(payload: String) -> Bool
-   
-### MultiTypeCertificate
+#### Validity State
 
-{
+public struct ValidityState {
+    
+    public let technicalValidity: VerificationResult
+    
+    public let issuerValidity: VerificationResult
+    
+    public let destinationValidity: VerificationResult
+    
+    public let travalerValidity: VerificationResult
+    
+    public let allRulesValidity: VerificationResult
+    
+    public let validityFailures: [String]
+    
+    public var infoSection: InfoSection?
+    
+    public let isRevoked: Bool
+    
+    public var isVerificationFailed: Bool
+ }
+    
+#### MultiTypeCertificate
+
 public class MultiTypeCertificate {
 
     public let certificateType: CertificateType
@@ -112,7 +143,7 @@ public class MultiTypeCertificate {
     public var certificateCreationDate: String 
     
  }
- }
+
 ### Prerequisites
 
 Create an new inspection module and add it to the imports by importing it [here](https://github.com/eu-digital-green-certificates/dgca-verification-center-ios/blob/main/Sources/DGCVerificationCenter/DGCVerificationCenter.swift#L66)
