@@ -63,7 +63,6 @@ public class CertificateApplicant {
     public static func isApplicableFormatForVerification(payload: String) -> Bool {
         if isApplicableDCCFormat(payload: payload) ||
             isApplicableICAOFormat(payload: payload) ||
-            isApplicableDIVOCFormat(payload: payload) ||
             isApplicableSHCFormat(payload: payload) {
             return true
         } else {
@@ -103,11 +102,7 @@ public class CertificateApplicant {
     public static func isApplicableICAOFormat(payload: String) -> Bool {
         return false
     }
-    
-    public static func isApplicableDIVOCFormat(payload: String) -> Bool {
-        return false
-    }
-    
+        
     public static func isApplicableVCFormat(payload: String) -> Bool {
         return false
     }

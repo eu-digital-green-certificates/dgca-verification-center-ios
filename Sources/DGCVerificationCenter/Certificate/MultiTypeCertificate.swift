@@ -15,9 +15,6 @@ import DCCInspection
 #if canImport(ICAOInspection)
 import ICAOInspection
 #endif
-#if canImport(DIVOCInspection)
-import DIVOCInspection
-#endif
 #if canImport(DGCSHInspection)
 import DGCSHInspection
 #endif
@@ -102,13 +99,7 @@ public class MultiTypeCertificate {
             #if canImport(ICAOInspection)
                 self.digitalCertificate = try? HCert(from: payload, ruleCountryCode: ruleCountryCode)
             #endif
-        
-        } else if CertificateApplicant.isApplicableDIVOCFormat(payload: payload) {
-            self.certificateType = .divoc
-            #if canImport(DIVOCInspection)
-                self.digitalCertificate = try? HCert(from: payload, ruleCountryCode: ruleCountryCode)
-            #endif
-        
+                
         } else if CertificateApplicant.isApplicableSHCFormat(payload: payload) {
             self.certificateType = .shc
         #if canImport(DGCSHInspection)

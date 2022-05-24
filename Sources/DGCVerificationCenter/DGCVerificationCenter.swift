@@ -4,12 +4,11 @@ import DGCCoreLibrary
 #if canImport(DCCInspection)
 import DCCInspection
 #endif
+
 #if canImport(ICAOInspection)
 import ICAOInspection
 #endif
-#if canImport(DIVOCInspection)
-import DIVOCInspection
-#endif
+
 #if canImport(DGCSHInspection)
 import DGCSHInspection
 #endif
@@ -54,7 +53,6 @@ public class DGCVerificationCenter {
     
     public var dccInspector: CertificateInspection?
     public var icaoInspector: CertificateInspection?
-    public var divocInspector: CertificateInspection?
     public var shcInspector: CertificateInspection?
     
     public var applicableInspectors: [ApplicableInspector] = []
@@ -90,15 +88,7 @@ public class DGCVerificationCenter {
             let applicableICAOInspector = ApplicableInspector(type: .icao, inspector: icInspector)
             self.applicableInspectors.append(applicableICAOInspector)
         #endif
-        
-        #if canImport(DIVOCInspection)
-            arrayTypes.append(.divoc)
-            let dvcInspector = DIVOCInspection()
-            self.divocInspector = dvcInspector
-            let applicableDIVInspector = ApplicableInspector(type: .divoc, inspector: dvcInspector)
-            self.applicableInspectors.append(applicableDIVInspector)
-        #endif
-                
+                        
         #if canImport(DGCSHInspection)
             arrayTypes.append(.shc)
             let shInspector = DGCSHInspection()
@@ -132,17 +122,7 @@ public class DGCVerificationCenter {
                 self.applicableInspectors.append(applicableInspector)
             }
         #endif
-        
-        #if canImport(DIVOCInspection)
-            if types.contains(.divoc) {
-                arrayTypes.append(.divoc)
-                let inspector = DIVOCInspection()
-                self.divocInspector = inspector
-                let applicableInspector = ApplicableInspector(type: .divoc, inspector: inspector)
-                self.applicableInspectors.append(applicableInspector)
-            }
-        #endif
-                
+                        
         #if canImport(DGCSHInspection)
             if types.contains(.shc) {
                 arrayTypes.append(.shc)
@@ -183,17 +163,6 @@ public class DGCVerificationCenter {
             }
         #endif
         
-        #if canImport(DIVOCInspection)
-            if type == .divoc {
-                arrayTypes.append(.divoc)
-                let inspector = DIVOCInspection()
-                self.divocInspector = inspector
-                let applicableInspector = ApplicableInspector(type: .divoc, inspector: inspector)
-                self.applicableInspectors.append(applicableInspector)
-
-            }
-        #endif
-
         #if canImport(DGCSHInspection)
             if type == .shc {
                 arrayTypes.append(.shc)
@@ -264,8 +233,6 @@ public class DGCVerificationCenter {
             return dccInspector?.validateCertificate(certificate)
         case .icao:
             return icaoInspector?.validateCertificate(certificate)
-        case .divoc:
-            return divocInspector?.validateCertificate(certificate)
         case .shc:
             return shcInspector?.validateCertificate(certificate)
         }
