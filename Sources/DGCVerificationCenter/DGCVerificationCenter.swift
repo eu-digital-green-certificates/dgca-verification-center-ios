@@ -41,9 +41,9 @@ public class DGCVerificationCenter {
     public static var countryCodes: [CountryModel] {
         get {
             #if canImport(DCCInspection)
-            return DCCDataCenter.countryCodes.sorted(by: { $0.name < $1.name })
+                return DCCDataCenter.countryCodes.sorted(by: { $0.name < $1.name })
             #else
-            return []
+                return []
             #endif
         }
     }
