@@ -47,7 +47,7 @@ The auxiliary layer contains auxiliary modules that is used by second and thitd 
 
 The Verification Center is responsible for such main tasks:
    - check if certificate standard is applicable to the SDK
-   - verification of scanned QR certificates.
+   - verification of scanned QR certificates and prepare report.
    - loading necessary data.
 
 The root Verification Center object is shared object of DGCVerificationCenter class
@@ -110,7 +110,7 @@ The CertificateType contains existed types of certificates (.dcc, .shc) and may 
       }
 
    
-### Applicable Certificate types
+#### Applicable Certificate types
 
  These methods allow us to quickly determine the type of certificate in QR without creating a certificate.
    
@@ -122,7 +122,7 @@ The CertificateType contains existed types of certificates (.dcc, .shc) and may 
    
       public static func isApplicableSHCFormat(payload: String) -> Bool
 
-#### Check whether verification can be applied
+#### Methods whether verification can be applied
 
  These methods allow you to determine if the certificate is valid.
    
@@ -146,13 +146,7 @@ The CertificateType contains existed types of certificates (.dcc, .shc) and may 
     
          public let allRulesValidity: VerificationResult
     
-         public let validityFailures: [String]
-    
-         public var infoSection: InfoSection?
-    
-         public let isRevoked: Bool
-    
-         public var isVerificationFailed: Bool
+         ----
       }
     
 #### What are MultiType Certificates
@@ -162,44 +156,22 @@ The CertificateType contains existed types of certificates (.dcc, .shc) and may 
       public class MultiTypeCertificate {
 
          public let certificateType: CertificateType
-    
-         public let ruleCountryCode: String?
-    
-         public let scannedDate: Date
-    
-         public var storedTan: String?
-    
+        
          public var digitalCertificate: CertificationProtocol?
       
          public var firstName: String 
       
-         public var firstNameStandardized: String? 
-      
-         public var lastName: String 
-      
-         public var lastNameStandardized: String 
-      
-         public var fullName: String 
-      
-         public var certTypeString: String
-      
-         public var isRevoked: Bool 
-      
-         public var isUntrusted: Bool 
-      
-         public var certHash: String 
-      
-         public var uvciHash: Data? 
-      
-         public var countryCodeUvciHash: Data?
-      
-         public var signatureHash: Data? 
-      
-         public var body: JSON? 
-      
-         public var certificateCreationDate: String 
+         ----
       
       }
+
+#### Loading data
+  Loading data methods is responsible for downloading and updating data from servers.
+  Also Verification center provides reading stored data
+   
+        public func prepareStoredData(appType: AppType, completion: @escaping DataCompletionHandler)
+        
+        public func updateStoredData(appType: AppType, completion: @escaping DataCompletionHandler)
 
 ### Prerequisites
 
