@@ -77,28 +77,27 @@ The CertificateType contains existed types of certificates (.dcc, .shc) and may 
    ApplicableInspector is a struct:
    
       public struct ApplicableInspector {
-      public let type: CertificateType
-       public let inspector: CertificateInspection
-}
+         public let type: CertificateType
+         public let inspector: CertificateInspection
+      }
 
-   
 #### Initialization of DGCVerificationCenter
 
       public init()
-    Initializes Verification Center with all available types
+ Initializes Verification Center with all available types
 
       public init?(types: [CertificateType])
-   Initializes Verification Center with listed available types
+ Initializes Verification Center with listed available types
 
       public init?(type: CertificateType)
-   Initializes Verification Center with pointed available type
+ Initializes Verification Center with pointed available type
    
-   If in initialization pointed non-available types they will not be included to the Center
-   If there are listed no available types the Verification Center will not be created
+ If in initialization pointed non-available types they will not be included to the Center
+ If there are listed no available types the Verification Center will not be created
    
 ### Applicable types of certificates
 
-   These methods allow you to quickly determine the type of certificate in QR without creating a certificate.
+ These methods allow you to quickly determine the type of certificate in QR without creating a certificate.
    
       public let applicableCertificateTypes: [CertificateType]
 
@@ -110,7 +109,7 @@ The CertificateType contains existed types of certificates (.dcc, .shc) and may 
 
 #### Veryfication of certificates
 
-   These methods allow you to determine if the certificate is valid.
+ These methods allow you to determine if the certificate is valid.
    
       public var verificationInspectior: CertificateInspection?
    
