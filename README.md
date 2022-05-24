@@ -181,6 +181,7 @@ The CertificateType contains existed types of certificates (.dcc, .shc) and may 
       }
 
   Load stored data or download data from server side:
+  
       verificationCenter.prepareStoredData(appType: .verifier) { result in
             if case let .failure(error) = result {
                 // process error
@@ -192,7 +193,8 @@ The CertificateType contains existed types of certificates (.dcc, .shc) and may 
       }
       
  Download data from server side:
-      verificationCenter.updateStoredData(appType: .verifier) { [unowned self] result in
+ 
+      verificationCenter.updateStoredData(appType: .verifier) { result in
             if case let .failure(error) = result {
                 // process error
             } else {
