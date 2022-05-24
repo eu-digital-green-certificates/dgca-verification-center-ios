@@ -69,7 +69,7 @@ The auxiliary layer contains auxiliary modules that is used by second and thitd 
    public static func isApplicableSHCFormat(payload: String) -> Bool
    
 ### MultiTypeCertificate
-
+{
 public class MultiTypeCertificate {
 
     public let certificateType: CertificateType
@@ -111,7 +111,7 @@ public class MultiTypeCertificate {
     public var certificateCreationDate: String 
     
  }
- 
+ }
 ### Prerequisites
 
 Create an new inspection module and add it to the imports by importing it [here](https://github.com/eu-digital-green-certificates/dgca-verification-center-ios/blob/main/Sources/DGCVerificationCenter/DGCVerificationCenter.swift#L66)
