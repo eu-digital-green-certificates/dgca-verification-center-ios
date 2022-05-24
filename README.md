@@ -101,6 +101,9 @@ The CertificateType contains existed types of certificates (.dcc, .shc) and may 
          func prepareLocallyStoredData(appType: AppType, completion: @escaping DataCompletionHandler)
          func updateLocallyStoredData(appType: AppType, completion: @escaping DataCompletionHandler)
       }
+      
+      Verification center conforms to DataLoadingProtocol
+      
 
    ApplicableInspector is a struct:
    
@@ -165,13 +168,6 @@ The CertificateType contains existed types of certificates (.dcc, .shc) and may 
       
       }
 
-#### Loading data
-  Loading data methods is responsible for downloading and updating data from servers.
-  Also Verification center provides reading stored data
-   
-        public func prepareStoredData(appType: AppType, completion: @escaping DataCompletionHandler)
-        
-        public func updateStoredData(appType: AppType, completion: @escaping DataCompletionHandler)
 
 ## Examples
 
