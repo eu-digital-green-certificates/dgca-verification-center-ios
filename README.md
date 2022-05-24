@@ -43,13 +43,36 @@ On the next layer are row of verification inspectors. Now SDK includes two DCC a
 The third layer contains Core library where are incapsulated common servises such as encryption, sighning. zipping, etc.
 The auxiliary layer contains auxiliary modules that is used by second and thitd layers. There are JSON and Cert Logic, Bloom and Hash filters and row of third part libraries.
 
-#### Verification Center API 
+#### Root object in API
 
-   public enum CertificateType: String { case unknown, dcc, icao, divoc, shc }
+The root object is DGCVerificationCenter
+
+public class DGCVerificationCenter
+
+That object is responsible for verification of scanned and saved certificates. 
+The certificate has its own specific type and can be verified depend on implemented inspectors
+
+public enum CertificateType: String { case unknown, dcc, icao, divoc, shc }
+
+The CertificateType contains existed types of certificates (.dcc, .shc) and may contain non-existed types (.icao) that arenot added yet.
+
+#### Inspectors 
+
+   public final class DCCInspection: CertificateInspection
    
-   public class DGCVerificationCenter
+   public final class DGCSHInspection: CertificateInspection
    
-   CertificateType contains existed types of certificates (.dcc, .shc) and may contain non-existed types (.icao) that arenot added yet.
+   Inspectors are classes that imported from Inspectors' modeles and can be included to or excluded from the Verification Center.
+   
+      public var dccInspector: CertificateInspection?
+      
+      public var icaoInspector: CertificateInspection?
+      
+      public var shcInspector: CertificateInspection?
+    
+      public var applicableInspectors: [ApplicableInspector] = []
+
+   CertificateInspection is the protocol that implemens every inspector.
    
 #### Initialization of DGCVerificationCenter
 
