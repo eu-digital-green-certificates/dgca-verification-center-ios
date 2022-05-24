@@ -220,6 +220,24 @@ public class DGCVerificationCenter {
         }
     }
     
+    // MARK: - Applicable Formats
+
+    public static func isApplicableFormat(payload: String) -> Bool {
+        CertificateApplicant.isApplicableFormatForVerification(payload: payload)
+    }
+    
+    public func isApplicableDCCFormat(payload: String) -> Bool {
+        return CertificateApplicant.isApplicableDCCFormat(payload: payload)
+    }
+    
+    public func isApplicableICAOFormat(payload: String) -> Bool {
+        return CertificateApplicant.isApplicableICAOFormat(payload: payload)
+    }
+    
+    public func isApplicableSHCFormat(payload: String) -> Bool {
+        return CertificateApplicant.isApplicableSHCFormat(payload: payload)
+    }
+
     // MARK: - Verifying
     
     public func validateCertificate(_ multiTypeCertificate: MultiTypeCertificate) -> ValidityState? {

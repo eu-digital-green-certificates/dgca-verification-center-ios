@@ -15,8 +15,8 @@ enum ClaimKey: String {
   case hCert = "-260"
   case euDgcV1 = "1"
 }
-
-public class CertificateApplicant {
+ 
+class CertificateApplicant {
     private static let supportedDCCPrefixes = [ "HC1:" ]
     private static let supportedSHCPrefixes = [ "shc:/" ]
     private static let supportedSHCPrefix = "shc:/"
@@ -60,7 +60,7 @@ public class CertificateApplicant {
 
     }
     
-    public static func isApplicableFormatForVerification(payload: String) -> Bool {
+    static func isApplicableFormatForVerification(payload: String) -> Bool {
         if isApplicableDCCFormat(payload: payload) ||
             isApplicableICAOFormat(payload: payload) ||
             isApplicableSHCFormat(payload: payload) {
@@ -70,7 +70,7 @@ public class CertificateApplicant {
         }
     }
     
-    public static func isApplicableDCCFormat(payload: String) -> Bool {
+    static func isApplicableDCCFormat(payload: String) -> Bool {
         let payloadString: String
         if doesCH1PreffixExist(payload) {
             payloadString = parseDCCPrefix(payload)
@@ -99,15 +99,11 @@ public class CertificateApplicant {
         return body[ClaimKey.euDgcV1.rawValue].exists()
     }
     
-    public static func isApplicableICAOFormat(payload: String) -> Bool {
-        return false
-    }
-        
-    public static func isApplicableVCFormat(payload: String) -> Bool {
+    static func isApplicableICAOFormat(payload: String) -> Bool {
         return false
     }
     
-    public static func isApplicableSHCFormat(payload: String) -> Bool {
+    static func isApplicableSHCFormat(payload: String) -> Bool {
         var barcode: String = payload
         if !payload.starts(with: "ey") {
             // is not JWT, do numeric decoding
