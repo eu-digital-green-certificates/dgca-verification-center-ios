@@ -72,17 +72,25 @@ The CertificateType contains existed types of certificates (.dcc, .shc) and may 
     
       public var applicableInspectors: [ApplicableInspector] = []
 
-   CertificateInspection is the protocol that implemens every inspector.
+   The CertificateInspection is the public protocol that implemens every inspector.
+   
+   ApplicableInspector is a struct:
+   
+      public struct ApplicableInspector {
+      public let type: CertificateType
+       public let inspector: CertificateInspection
+}
+
    
 #### Initialization of DGCVerificationCenter
 
-   public init()
-   Initializes Verification Center with all available types
+      public init()
+    Initializes Verification Center with all available types
 
-   public init?(types: [CertificateType])
+      public init?(types: [CertificateType])
    Initializes Verification Center with listed available types
 
-   public init?(type: CertificateType)
+      public init?(type: CertificateType)
    Initializes Verification Center with pointed available type
    
    If in initialization pointed non-available types they will not be included to the Center
@@ -92,90 +100,90 @@ The CertificateType contains existed types of certificates (.dcc, .shc) and may 
 
    These methods allow you to quickly determine the type of certificate in QR without creating a certificate.
    
-   public let applicableCertificateTypes: [CertificateType]
+      public let applicableCertificateTypes: [CertificateType]
 
-   public static func isApplicableFormatForVerification(payload: String) -> Bool
+      public static func isApplicableFormatForVerification(payload: String) -> Bool
    
-   public static func isApplicableDCCFormat(payload: String) -> Bool
+      public static func isApplicableDCCFormat(payload: String) -> Bool
    
-   public static func isApplicableSHCFormat(payload: String) -> Bool
+      public static func isApplicableSHCFormat(payload: String) -> Bool
 
 #### Veryfication of certificates
 
    These methods allow you to determine if the certificate is valid.
    
-   public var verificationInspectior: CertificateInspection?
+      public var verificationInspectior: CertificateInspection?
    
-   public func isVerifiableCertificateType(_ type: CertificateType) -> Bool
+      public func isVerifiableCertificateType(_ type: CertificateType) -> Bool
 
-   public func validateCertificate(_ multiTypeCertificate: MultiTypeCertificate) -> ValidityState?
+      public func validateCertificate(_ multiTypeCertificate: MultiTypeCertificate) -> ValidityState?
    
 #### Validity State
 
-public struct ValidityState {
+   public struct ValidityState {
     
-    public let technicalValidity: VerificationResult
+      public let technicalValidity: VerificationResult
     
-    public let issuerValidity: VerificationResult
+      public let issuerValidity: VerificationResult
     
-    public let destinationValidity: VerificationResult
+      public let destinationValidity: VerificationResult
     
-    public let travalerValidity: VerificationResult
+      public let travalerValidity: VerificationResult
     
-    public let allRulesValidity: VerificationResult
+      public let allRulesValidity: VerificationResult
     
-    public let validityFailures: [String]
+      public let validityFailures: [String]
     
-    public var infoSection: InfoSection?
+      public var infoSection: InfoSection?
     
-    public let isRevoked: Bool
+      public let isRevoked: Bool
     
-    public var isVerificationFailed: Bool
- }
+      public var isVerificationFailed: Bool
+   }
     
 #### MultiTypeCertificate
 
-public class MultiTypeCertificate {
+   public class MultiTypeCertificate {
 
-    public let certificateType: CertificateType
+      public let certificateType: CertificateType
     
-    public let ruleCountryCode: String?
+      public let ruleCountryCode: String?
     
-    public let scannedDate: Date
+      public let scannedDate: Date
     
-    public var storedTan: String?
+      public var storedTan: String?
     
-    public var digitalCertificate: CertificationProtocol?
-    
-    public var firstName: String 
-    
-    public var firstNameStandardized: String? 
-    
-    public var lastName: String 
-    
-    public var lastNameStandardized: String 
-
-    public var fullName: String 
-    
-    public var certTypeString: String
-
-    public var isRevoked: Bool 
-    
-    public var isUntrusted: Bool 
-
-    public var certHash: String 
-    
-    public var uvciHash: Data? 
-    
-    public var countryCodeUvciHash: Data?
-    
-    public var signatureHash: Data? 
-    
-    public var body: JSON? 
-
-    public var certificateCreationDate: String 
-    
- }
+      public var digitalCertificate: CertificationProtocol?
+      
+      public var firstName: String 
+      
+      public var firstNameStandardized: String? 
+      
+      public var lastName: String 
+      
+      public var lastNameStandardized: String 
+      
+      public var fullName: String 
+      
+      public var certTypeString: String
+      
+      public var isRevoked: Bool 
+      
+      public var isUntrusted: Bool 
+      
+      public var certHash: String 
+      
+      public var uvciHash: Data? 
+      
+      public var countryCodeUvciHash: Data?
+      
+      public var signatureHash: Data? 
+      
+      public var body: JSON? 
+      
+      public var certificateCreationDate: String 
+      
+   }
 
 ### Prerequisites
 
