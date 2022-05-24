@@ -43,7 +43,7 @@ On the next layer are row of verification inspectors. Now SDK includes two DCC a
 The third layer contains Core library where are incapsulated common servises such as encryption, sighning. zipping, etc.
 The auxiliary layer contains auxiliary modules that is used by second and thitd layers. There are JSON and Cert Logic, Bloom and Hash filters and row of third part libraries.
 
-### Verification Center API 
+#### Verification Center API 
 
    public enum CertificateType: String { case unknown, dcc, icao, divoc, shc }
    
@@ -51,16 +51,24 @@ The auxiliary layer contains auxiliary modules that is used by second and thitd 
    
    CertificateType contains existed types of certificates (.dcc, .shc) and may contain non-existed types (.icao) that arenot added yet.
    
-### Initialization of DGCVerificationCenter
+#### Initialization of DGCVerificationCenter
 
    public init()
+   Initializes Verification Center with all available types
 
    public init?(types: [CertificateType])
+   Initializes Verification Center with listed available types
 
    public init?(type: CertificateType)
-
+   Initializes Verification Center with pointed available type
+   
+   If in initialization pointed non-available types they will not be included to the Center
+   If there are listed no available types the Verification Center will not be created
+   
 ### Applicable types of certificates
 
+   These methods allow you to quickly determine the type of certificate in QR without creating a certificate.
+   
    public let applicableCertificateTypes: [CertificateType]
 
    public static func isApplicableFormatForVerification(payload: String) -> Bool
@@ -69,7 +77,9 @@ The auxiliary layer contains auxiliary modules that is used by second and thitd 
    
    public static func isApplicableSHCFormat(payload: String) -> Bool
 
-### Veryfication of certificates
+#### Veryfication of certificates
+
+   These methods allow you to determine if the certificate is valid.
    
    public var verificationInspectior: CertificateInspection?
    
