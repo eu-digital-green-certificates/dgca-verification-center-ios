@@ -47,12 +47,12 @@ The auxiliary layer contains auxiliary modules that is used by second and thitd 
 
 The root object is DGCVerificationCenter
 
-   public class DGCVerificationCenter
+      public class DGCVerificationCenter
 
 That object is responsible for verification of scanned and saved certificates. 
 The certificate has its own specific type and can be verified depend on implemented inspectors
 
-   public enum CertificateType: String { case unknown, dcc, icao, divoc, shc }
+      public enum CertificateType: String { case unknown, dcc, icao, divoc, shc }
 
 The CertificateType contains existed types of certificates (.dcc, .shc) and may contain non-existed types (.icao) that arenot added yet.
 
@@ -143,6 +143,7 @@ The CertificateType contains existed types of certificates (.dcc, .shc) and may 
 #### MultiTypeCertificate
 
    Multi type certificate object is designed for holding certificate all applicable types in digitalCertificate field.
+      
       public class MultiTypeCertificate {
 
          public let certificateType: CertificateType
