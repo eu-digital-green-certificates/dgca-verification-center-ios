@@ -45,10 +45,17 @@ The auxiliary layer contains auxiliary modules that is used by second and thitd 
 
 #### DGCVerificationCenter is a Root object in API
 
-The root object is DGCVerificationCenter
+The Verification Center is responsible for such main tasks:
+   - check if certificate standard is applicable to the SDK
+   - verification of scanned QR certificates.
+   - loading necessary data.
+
+The root Verification Center object is shared object of DGCVerificationCenter class
 
       public class DGCVerificationCenter
-
+      
+      public static let shared = DGCVerificationCenter()
+      
 That object is responsible for verification of scanned and saved certificates. 
 The certificate has its own specific type and can be verified depend on implemented inspectors
 
@@ -62,21 +69,18 @@ The CertificateType contains existed types of certificates (.dcc, .shc) and may 
  Initializes Verification Center with all available types
 
       public init?(types: [CertificateType])
- Initializes Verification Center with listed available types
+ Initializes Verification Center with listed available types. If listed types are unavailable - the DGCVerificationCenter won't be created.
 
       public init?(type: CertificateType)
- Initializes Verification Center with pointed available type
-   
- If in initialization pointed non-available types they will not be included to the Center
- If there are listed no available types the Verification Center will not be created
-
+ Initializes Verification Center with pointed available type. If that type is unavailable - the DGCVerificationCenter won't be created.
+ 
 #### Inspectors 
 
       public final class DCCInspection: CertificateInspection
    
       public final class DGCSHInspection: CertificateInspection
    
-   Inspectors are classes that imported from Inspectors' modeles and can be included to or excluded from the Verification Center.
+   Every Inspector is a root class of Inspector module. That module can be included to or excluded from the Verification Center.
    
       public var dccInspector: CertificateInspecting & DataLoadingProtocol?
       public var icaoInspector: CertificateInspecting & DataLoadingProtocol?
@@ -106,7 +110,7 @@ The CertificateType contains existed types of certificates (.dcc, .shc) and may 
       }
 
    
-### Certificate types
+### Applicable Certificate types
 
  These methods allow us to quickly determine the type of certificate in QR without creating a certificate.
    
@@ -118,7 +122,7 @@ The CertificateType contains existed types of certificates (.dcc, .shc) and may 
    
       public static func isApplicableSHCFormat(payload: String) -> Bool
 
-#### Veryfication of certificates
+#### Check whether verification can be applied
 
  These methods allow you to determine if the certificate is valid.
    
@@ -126,7 +130,7 @@ The CertificateType contains existed types of certificates (.dcc, .shc) and may 
 
       public func validateCertificate(_ multiTypeCertificate: MultiTypeCertificate) -> ValidityState?
    
-#### Validity State
+#### Validation result
 
    Validity State is a struct that incapsulates big range of validation results, limitations and errors.
    
@@ -151,9 +155,9 @@ The CertificateType contains existed types of certificates (.dcc, .shc) and may 
          public var isVerificationFailed: Bool
       }
     
-#### MultiTypeCertificate
+#### What are MultiType Certificates
 
-   Multi type certificate object is designed for holding certificate all applicable types in digitalCertificate field.
+   Multi type certificate object is designed for holding certificate of all applicable types in a digitalCertificate field.
       
       public class MultiTypeCertificate {
 
