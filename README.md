@@ -173,6 +173,9 @@ The CertificateType contains existed types of certificates (.dcc, .shc) and may 
         
         public func updateStoredData(appType: AppType, completion: @escaping DataCompletionHandler)
 
+## Examples
+
+
 ### Prerequisites
 
 Create an new inspection module and add it to the imports by importing it [here](https://github.com/eu-digital-green-certificates/dgca-verification-center-ios/blob/main/Sources/DGCVerificationCenter/DGCVerificationCenter.swift#L66)
