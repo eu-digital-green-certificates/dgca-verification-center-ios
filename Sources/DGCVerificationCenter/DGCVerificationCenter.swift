@@ -20,7 +20,7 @@ import DGCSHInspection
 
 public struct ApplicableInspector {
     public let type: CertificateType
-    public let inspector: CertificateInspection
+    public let inspector: CertificateInspecting & DataLoadingProtocol
 }
 
 public struct SharedLinks {
@@ -29,7 +29,6 @@ public struct SharedLinks {
 }
 
 public class DGCVerificationCenter {
-    
     
     public static let shared = DGCVerificationCenter()
     
@@ -51,9 +50,9 @@ public class DGCVerificationCenter {
     
     public let applicableCertificateTypes: [CertificateType]
     
-    public var dccInspector: CertificateInspection?
-    public var icaoInspector: CertificateInspection?
-    public var shcInspector: CertificateInspection?
+    public var dccInspector: CertificateInspecting & DataLoadingProtocol?
+    public var icaoInspector: CertificateInspecting & DataLoadingProtocol?
+    public var shcInspector: CertificateInspecting & DataLoadingProtocol?
     
     public var applicableInspectors: [ApplicableInspector] = []
     
@@ -186,11 +185,11 @@ public class DGCVerificationCenter {
     }
     
     // MARK: - Validation
-//    public static func isApplicableToTicketingFormat(payload: String) -> Bool {
-//        guard let payloadData = payload.data(using: .utf8),
-//            let ticketing = try? JSONDecoder().decode(CheckInQR.self, from: payloadData) else { return false }
-//        return !ticketing.token.isEmpty
-//    }
+    //    public static func isApplicableToTicketingFormat(payload: String) -> Bool {
+    //        guard let payloadData = payload.data(using: .utf8),
+    //            let ticketing = try? JSONDecoder().decode(CheckInQR.self, from: payloadData) else { return false }
+    //        return !ticketing.token.isEmpty
+    //    }
 
     // MARK: - Data Loading
     public func prepareStoredData(appType: AppType, completion: @escaping DataCompletionHandler) {
