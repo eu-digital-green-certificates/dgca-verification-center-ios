@@ -47,20 +47,20 @@ The auxiliary layer contains auxiliary modules that is used by second and thitd 
 
 The root object is DGCVerificationCenter
 
-public class DGCVerificationCenter
+   public class DGCVerificationCenter
 
 That object is responsible for verification of scanned and saved certificates. 
 The certificate has its own specific type and can be verified depend on implemented inspectors
 
-public enum CertificateType: String { case unknown, dcc, icao, divoc, shc }
+   public enum CertificateType: String { case unknown, dcc, icao, divoc, shc }
 
 The CertificateType contains existed types of certificates (.dcc, .shc) and may contain non-existed types (.icao) that arenot added yet.
 
 #### Inspectors 
 
-   public final class DCCInspection: CertificateInspection
+      public final class DCCInspection: CertificateInspection
    
-   public final class DGCSHInspection: CertificateInspection
+      public final class DGCSHInspection: CertificateInspection
    
    Inspectors are classes that imported from Inspectors' modeles and can be included to or excluded from the Verification Center.
    
@@ -119,70 +119,71 @@ The CertificateType contains existed types of certificates (.dcc, .shc) and may 
    
 #### Validity State
 
-   public struct ValidityState {
+      public struct ValidityState {
     
-      public let technicalValidity: VerificationResult
+         public let technicalValidity: VerificationResult
     
-      public let issuerValidity: VerificationResult
+         public let issuerValidity: VerificationResult
     
-      public let destinationValidity: VerificationResult
+         public let destinationValidity: VerificationResult
     
-      public let travalerValidity: VerificationResult
+         public let travalerValidity: VerificationResult
     
-      public let allRulesValidity: VerificationResult
+         public let allRulesValidity: VerificationResult
     
-      public let validityFailures: [String]
+         public let validityFailures: [String]
     
-      public var infoSection: InfoSection?
+         public var infoSection: InfoSection?
     
-      public let isRevoked: Bool
+         public let isRevoked: Bool
     
-      public var isVerificationFailed: Bool
-   }
+         public var isVerificationFailed: Bool
+      }
     
 #### MultiTypeCertificate
 
-   public class MultiTypeCertificate {
+   Multi type certificate object is designed for holding certificate all applicable types in digitalCertificate field.
+      public class MultiTypeCertificate {
 
-      public let certificateType: CertificateType
+         public let certificateType: CertificateType
     
-      public let ruleCountryCode: String?
+         public let ruleCountryCode: String?
     
-      public let scannedDate: Date
+         public let scannedDate: Date
     
-      public var storedTan: String?
+         public var storedTan: String?
     
-      public var digitalCertificate: CertificationProtocol?
+         public var digitalCertificate: CertificationProtocol?
       
-      public var firstName: String 
+         public var firstName: String 
       
-      public var firstNameStandardized: String? 
+         public var firstNameStandardized: String? 
       
-      public var lastName: String 
+         public var lastName: String 
       
-      public var lastNameStandardized: String 
+         public var lastNameStandardized: String 
       
-      public var fullName: String 
+         public var fullName: String 
       
-      public var certTypeString: String
+         public var certTypeString: String
       
-      public var isRevoked: Bool 
+         public var isRevoked: Bool 
       
-      public var isUntrusted: Bool 
+         public var isUntrusted: Bool 
       
-      public var certHash: String 
+         public var certHash: String 
       
-      public var uvciHash: Data? 
+         public var uvciHash: Data? 
       
-      public var countryCodeUvciHash: Data?
+         public var countryCodeUvciHash: Data?
       
-      public var signatureHash: Data? 
+         public var signatureHash: Data? 
       
-      public var body: JSON? 
+         public var body: JSON? 
       
-      public var certificateCreationDate: String 
+         public var certificateCreationDate: String 
       
-   }
+      }
 
 ### Prerequisites
 
