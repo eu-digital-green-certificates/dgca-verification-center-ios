@@ -171,7 +171,36 @@ The CertificateType contains existed types of certificates (.dcc, .shc) and may 
 
 ## Examples
 
+  Use of Verification Center:
+  
+      let verificationCenter = DGCVerificationCenter.shared
+  
+  
+      if verificationCenter.downloadedDataHasExpired {
+           // process loading new data
+      }
 
+  Load stored data or download data from server side:
+      verificationCenter.prepareStoredData(appType: .verifier) { result in
+            if case let .failure(error) = result {
+                // process error
+            } else if case .noData = result {
+                // process nodata
+            } else {
+                // process success
+            }
+      }
+      
+ Download data from server side:
+      verificationCenter.updateStoredData(appType: .verifier) { [unowned self] result in
+            if case let .failure(error) = result {
+                // process error
+            } else {
+               // process success
+            }
+      }
+      
+      
 ### Prerequisites
 
 Create an new inspection module and add it to the imports by importing it [here](https://github.com/eu-digital-green-certificates/dgca-verification-center-ios/blob/main/Sources/DGCVerificationCenter/DGCVerificationCenter.swift#L66)
