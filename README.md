@@ -43,7 +43,7 @@ On the next layer are row of verification inspectors. Now SDK includes two DCC a
 The third layer contains Core library where are incapsulated common servises such as encryption, sighning. zipping, etc.
 The auxiliary layer contains auxiliary modules that is used by second and thitd layers. There are JSON and Cert Logic, Bloom and Hash filters and row of third part libraries.
 
-#### Root object in API
+#### DGCVerificationCenter is a Root object in API
 
 The root object is DGCVerificationCenter
 
@@ -55,31 +55,6 @@ The certificate has its own specific type and can be verified depend on implemen
       public enum CertificateType: String { case unknown, dcc, icao, divoc, shc }
 
 The CertificateType contains existed types of certificates (.dcc, .shc) and may contain non-existed types (.icao) that arenot added yet.
-
-#### Inspectors 
-
-      public final class DCCInspection: CertificateInspection
-   
-      public final class DGCSHInspection: CertificateInspection
-   
-   Inspectors are classes that imported from Inspectors' modeles and can be included to or excluded from the Verification Center.
-   
-      public var dccInspector: CertificateInspection?
-      
-      public var icaoInspector: CertificateInspection?
-      
-      public var shcInspector: CertificateInspection?
-    
-      public var applicableInspectors: [ApplicableInspector] = []
-
-   The CertificateInspection is the public protocol that implemens every inspector.
-   
-   ApplicableInspector is a struct:
-   
-      public struct ApplicableInspector {
-         public let type: CertificateType
-         public let inspector: CertificateInspection
-      }
 
 #### Initialization of DGCVerificationCenter
 
@@ -94,6 +69,42 @@ The CertificateType contains existed types of certificates (.dcc, .shc) and may 
    
  If in initialization pointed non-available types they will not be included to the Center
  If there are listed no available types the Verification Center will not be created
+
+#### Inspectors 
+
+      public final class DCCInspection: CertificateInspection
+   
+      public final class DGCSHInspection: CertificateInspection
+   
+   Inspectors are classes that imported from Inspectors' modeles and can be included to or excluded from the Verification Center.
+   
+      public var dccInspector: CertificateInspection & DataLoadingProtocol?
+      public var icaoInspector: CertificateInspection & DataLoadingProtocol?
+      public var shcInspector: CertificateInspection & DataLoadingProtocol?
+    
+      public var applicableInspectors: [ApplicableInspector] = []
+
+   The CertificateInspection and DataLoadingProtocol are the public protocol that implemens every inspector.
+   
+      public protocol CertificateInspection {
+         func validateCertificate(_ certificate: CertificationProtocol) -> ValidityState
+      }
+
+      public protocol DataLoadingProtocol {
+         var lastUpdate: Date { get }
+         var downloadedDataHasExpired: Bool { get }
+         
+         func prepareLocallyStoredData(appType: AppType, completion: @escaping DataCompletionHandler)
+         func updateLocallyStoredData(appType: AppType, completion: @escaping DataCompletionHandler)
+      }
+
+   ApplicableInspector is a struct:
+   
+      public struct ApplicableInspector {
+         public let type: CertificateType
+         public let inspector: CertificateInspection
+      }
+
    
 ### Applicable types of certificates
 
