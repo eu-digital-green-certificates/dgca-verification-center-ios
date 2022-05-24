@@ -69,6 +69,7 @@ The auxiliary layer contains auxiliary modules that is used by second and thitd 
    public static func isApplicableSHCFormat(payload: String) -> Bool
    
 ### MultiTypeCertificate
+
 {
 public class MultiTypeCertificate {
 
