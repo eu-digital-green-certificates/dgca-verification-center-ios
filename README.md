@@ -202,7 +202,18 @@ The CertificateType contains existed types of certificates (.dcc, .shc) and may 
             }
       }
       
-      
+Validate certificate:
+ 
+      if let validityState = verificationCenter.validateCertificate(certificate) {
+            if validityState.isVerificationFailed {
+               //process verification error
+               
+            } else {
+               //process verification success
+            }
+        }
+  
+  
 ### Prerequisites
 
 Create an new inspection module and add it to the imports by importing it [here](https://github.com/eu-digital-green-certificates/dgca-verification-center-ios/blob/main/Sources/DGCVerificationCenter/DGCVerificationCenter.swift#L66)
