@@ -78,13 +78,13 @@ The CertificateType contains existed types of certificates (.dcc, .shc) and may 
    
    Inspectors are classes that imported from Inspectors' modeles and can be included to or excluded from the Verification Center.
    
-      public var dccInspector: CertificateInspection & DataLoadingProtocol?
-      public var icaoInspector: CertificateInspection & DataLoadingProtocol?
-      public var shcInspector: CertificateInspection & DataLoadingProtocol?
-    
+      public var dccInspector: CertificateInspecting & DataLoadingProtocol?
+      public var icaoInspector: CertificateInspecting & DataLoadingProtocol?
+      public var shcInspector: CertificateInspecting & DataLoadingProtocol?
+      
       public var applicableInspectors: [ApplicableInspector] = []
 
-   The CertificateInspection and DataLoadingProtocol are the public protocol that implemens every inspector.
+   The CertificateInspection and DataLoadingProtocol are the public protocols that should be implemented in every inspector.
    
       public protocol CertificateInspection {
          func validateCertificate(_ certificate: CertificationProtocol) -> ValidityState
@@ -102,13 +102,13 @@ The CertificateType contains existed types of certificates (.dcc, .shc) and may 
    
       public struct ApplicableInspector {
          public let type: CertificateType
-         public let inspector: CertificateInspection
+         public let inspector: CertificateInspecting & DataLoadingProtocol
       }
 
    
-### Applicable types of certificates
+### Certificate types
 
- These methods allow you to quickly determine the type of certificate in QR without creating a certificate.
+ These methods allow us to quickly determine the type of certificate in QR without creating a certificate.
    
       public let applicableCertificateTypes: [CertificateType]
 
@@ -122,14 +122,14 @@ The CertificateType contains existed types of certificates (.dcc, .shc) and may 
 
  These methods allow you to determine if the certificate is valid.
    
-      public var verificationInspectior: CertificateInspection?
-   
       public func isVerifiableCertificateType(_ type: CertificateType) -> Bool
 
       public func validateCertificate(_ multiTypeCertificate: MultiTypeCertificate) -> ValidityState?
    
 #### Validity State
 
+   Validity State is a struct that incapsulates big range of validation results, limitations and errors.
+   
       public struct ValidityState {
     
          public let technicalValidity: VerificationResult
