@@ -202,6 +202,14 @@ The CertificateType contains existed types of certificates (.dcc, .shc) and may 
             }
       }
       
+ Check if payload is applicable to DCC or to SHC Format: 
+ 
+      if DGCVerificationCenter.shared.isApplicableDCCFormat(payload: barcodeString) {
+         // sth
+      } else if DGCVerificationCenter.shared.isApplicableSHCFormat(payload: barcodeString) {
+         // sth
+      }
+      
 Validate certificate:
  
       if let validityState = verificationCenter.validateCertificate(certificate) {
