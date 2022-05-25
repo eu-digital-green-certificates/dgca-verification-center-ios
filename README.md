@@ -155,6 +155,7 @@ The CertificateType contains existed types of certificates (.dcc, .shc) and may 
 #### What are MultiType Certificates
 
    Multi type certificate object is designed for holding certificate of all applicable types in a digitalCertificate field.
+   The certificate must comply with the protocol CertificationProtocol.
       
       public class MultiTypeCertificate {
 
