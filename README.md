@@ -45,11 +45,11 @@ The SDK is a four layers software.
 
 This Verification Center module is on a top layer. It contains all the basic methods needed to work with certificates.
 
-On the next layer are row of verification inspectors. Now SDK includes two DCC and SHC inspectors. Inspectors may not be used directly. They will be needed for special tasks related to a specific type of certificate. The inspectors encapsulated all the work with certificates of the appropriate type.Inspectors also work with data - download and store.
+On the next layer are row of verification inspectors. Now SDK includes two DCC and SHC inspectors. Inspectors may not be used directly. They will be needed for special tasks related to a specific type of certificate. The inspectors encapsulated all the work with certificates of the appropriate type. Inspectors also download and securely store the data.
 
-The third layer contains Core library where are incapsulated common servises such as encryption, sighning. zipping, etc.
+The third layer contains Core library where are incapsulated common secure servises such as encryption, sighning. zipping, etc.
 
-The auxiliary layer contains auxiliary modules that are used in second and thitd layers. There are JSON and Cert Logic, Bloom and Hash filters and row of third part libraries. It is available in the Center and can be imported to apps.
+The auxiliary layer contains auxiliary modules that are used in second and thitd layers. There are JSON and Cert Logic, Bloom and Hash filters and row of third part libraries. It is available in the Center and can be imported to apps for some specific tasks.
 
 #### DGCVerificationCenter is a Root object in API
 
