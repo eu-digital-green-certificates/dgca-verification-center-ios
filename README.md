@@ -45,7 +45,7 @@ The SDK is a four layers software.
 
 This Verification Center module is on a top layer. It contains all the basic methods needed to work with certificates.
 
-On the next layer are row of verification inspectors. Now SDK includes two DCC and SHC inspectors. Inspectors may not be used directly. They will be needed for special tasks related to a specific type of certificate.
+On the next layer are row of verification inspectors. Now SDK includes two DCC and SHC inspectors. Inspectors may not be used directly. They will be needed for special tasks related to a specific type of certificate. The inspectors encapsulated all the work with certificates of the appropriate type.Inspectors also work with data - download and store.
 
 The third layer contains Core library where are incapsulated common servises such as encryption, sighning. zipping, etc.
 
@@ -62,18 +62,19 @@ The Verification Center is responsible for such main tasks:
    - loading necessary data.
 
 
-The root Verification Center object is shared object of DGCVerificationCenter class
+The root Verification Center object is a shared object of DGCVerificationCenter class
 
       public class DGCVerificationCenter
       
       public static let shared = DGCVerificationCenter()
       
-That object is responsible for verification of scanned and saved certificates. 
+That object is responsible for verification of scanned and saved certificates.
+
 The certificate has its own specific type and can be verified depend on implemented inspectors
 
       public enum CertificateType: String { case unknown, dcc, icao, divoc, shc }
 
-The CertificateType contains existed types of certificates (.dcc, .shc) and may contain non-existed types (.icao) that arenot added yet.
+The CertificateType contains existed types of certificates (.dcc, .shc) and may contain non-existed types (.icao) that aren't added yet.
 
 #### Initialization of DGCVerificationCenter
 
@@ -89,7 +90,7 @@ The CertificateType contains existed types of certificates (.dcc, .shc) and may 
 #### Inspectors 
 
       public final class DCCInspection: CertificateInspection
-   
+      
       public final class DGCSHInspection: CertificateInspection
    
    Every Inspector is a root class of Inspector module. That module can be included to or excluded from the Verification Center.
@@ -130,11 +131,11 @@ The CertificateType contains existed types of certificates (.dcc, .shc) and may 
  These methods allow us to quickly determine the type of certificate in QR without creating a certificate.
    
       public let applicableCertificateTypes: [CertificateType]
-
+      
       public static func isApplicableFormatForVerification(payload: String) -> Bool
-   
+      
       public static func isApplicableDCCFormat(payload: String) -> Bool
-   
+      
       public static func isApplicableSHCFormat(payload: String) -> Bool
 
 #### Methods whether verification can be applied
@@ -150,17 +151,17 @@ The CertificateType contains existed types of certificates (.dcc, .shc) and may 
    Validity State is a struct that incapsulates big range of validation results, limitations and errors.
    
       public struct ValidityState {
-    
+         
          public let technicalValidity: VerificationResult
-    
+         
          public let issuerValidity: VerificationResult
-    
+         
          public let destinationValidity: VerificationResult
-    
+         
          public let travalerValidity: VerificationResult
-    
+         
          public let allRulesValidity: VerificationResult
-    
+         
          ----
       }
     
@@ -170,25 +171,25 @@ The CertificateType contains existed types of certificates (.dcc, .shc) and may 
    The certificate must comply with the protocol CertificationProtocol.
       
       public class MultiTypeCertificate {
-
+         
          public let certificateType: CertificateType
-        
+         
          public var digitalCertificate: CertificationProtocol?
-      
+         
          public var firstName: String 
-      
+         
          ----
-      
+         
       }
 
 
 ## Examples
 
   Use of Verification Center:
-  
+      
       let verificationCenter = DGCVerificationCenter.shared
   
-  
+      
       if verificationCenter.downloadedDataHasExpired {
            // process loading new data
       }
@@ -215,7 +216,7 @@ The CertificateType contains existed types of certificates (.dcc, .shc) and may 
             }
       }
       
- Check if payload is applicable to DCC or to SHC Format: 
+ Check if the payload is applicable to DCC or to SHC Format: 
  
       if DGCVerificationCenter.shared.isApplicableDCCFormat(payload: barcodeString) {
          // sth
@@ -223,7 +224,7 @@ The CertificateType contains existed types of certificates (.dcc, .shc) and may 
          // sth
       }
       
-Validate certificate:
+Validating of the certificate:
  
       if let validityState = verificationCenter.validateCertificate(certificate) {
             if validityState.isVerificationFailed {
