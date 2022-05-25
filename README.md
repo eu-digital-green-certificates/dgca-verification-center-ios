@@ -28,23 +28,28 @@
 
 This repository contains the source code of the EU Digital COVID Certificate Verification Center Module for IOS. 
 
+The Verification Center is designed to simplify working with existing certificate types and provide a platform for quickly creating new types.
+
 This module encapsulates the available modules for the QR verification process (e.g. DCC, SHC). Available modules included DCC and SHC inspectors and Core module. The core module contains the services used in the SDK module and in the inspectors.
 
 The verification process for new types of certificates can be extended by creating new modules of inspectors. Inspectors are independent and may be included or excluded at any time.
 
+
 ## Development
-To start using the Verification SDK it is enough to connect this package to the app or to another module.
+
+To start using the Verification Center SDK, simply connect this package to an application or other module.
 
 ### Components
 
-The SDK is four layers software.
-This Verification Center module is on a top layer. The properties and methods in this layer are the API.
+The SDK is a four layers software. 
 
-On the next layer are row of verification inspectors. Now SDK includes two DCC and SHC inspectors.
+This Verification Center module is on a top layer. It contains all the basic methods needed to work with certificates.
+
+On the next layer are row of verification inspectors. Now SDK includes two DCC and SHC inspectors. Inspectors may not be used directly. They will be needed for special tasks related to a specific type of certificate.
 
 The third layer contains Core library where are incapsulated common servises such as encryption, sighning. zipping, etc.
 
-The auxiliary layer contains auxiliary modules that are used in second and thitd layers. There are JSON and Cert Logic, Bloom and Hash filters and row of third part libraries.
+The auxiliary layer contains auxiliary modules that are used in second and thitd layers. There are JSON and Cert Logic, Bloom and Hash filters and row of third part libraries. It is available in the Center and can be imported to apps.
 
 #### DGCVerificationCenter is a Root object in API
 
