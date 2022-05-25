@@ -12,9 +12,11 @@ import SwiftyJSON
 #if canImport(DCCInspection)
 import DCCInspection
 #endif
+
 #if canImport(ICAOInspection)
 import ICAOInspection
 #endif
+
 #if canImport(DGCSHInspection)
 import DGCSHInspection
 #endif
@@ -43,7 +45,7 @@ public class MultiTypeCertificate {
     public var lastNameStandardized: String {
         digitalCertificate?.lastNameStandardized ?? ""
     }
-
+    
     public var fullName: String {
         digitalCertificate?.fullName ?? ""
     }
@@ -51,7 +53,7 @@ public class MultiTypeCertificate {
     public var certTypeString: String {
         digitalCertificate?.certTypeString ?? ""
     }
-
+    
     public var isRevoked: Bool {
         digitalCertificate?.isRevoked ?? false
     }
@@ -59,7 +61,7 @@ public class MultiTypeCertificate {
     public var isUntrusted: Bool {
         digitalCertificate?.isUntrusted ?? false
     }
-
+    
     public var certHash: String {
         digitalCertificate?.certHash ?? ""
     }
@@ -79,7 +81,7 @@ public class MultiTypeCertificate {
     public var body: JSON? {
         digitalCertificate?.body
     }
-
+    
     public var certificateCreationDate: String {
       digitalCertificate?.certificateCreationDate ?? ""
     }
@@ -93,7 +95,7 @@ public class MultiTypeCertificate {
             #if canImport(DCCInspection)
                 do {
                     self.digitalCertificate = try HCert(payload: payload, ruleCountryCode: ruleCountryCode)
-                } catch let error {
+                } catch {
                     throw error
                 }
             #endif
@@ -101,17 +103,15 @@ public class MultiTypeCertificate {
         } else if CertificateApplicant.isApplicableICAOFormat(payload: payload) {
             self.certificateType = .icao
             #if canImport(ICAOInspection)
-                self.digitalCertificate = try? HCert(from: payload, ruleCountryCode: ruleCountryCode)
+                // create ICAO certificate here
             #endif
                 
         } else if CertificateApplicant.isApplicableSHCFormat(payload: payload) {
             self.certificateType = .shc
-        #if canImport(DGCSHInspection)
-        #endif
             #if canImport(DGCSHInspection)
                 do {
                     self.digitalCertificate = try SHCert(payload: payload)
-                } catch let error {
+                } catch {
                     throw error
                 }
             #endif
@@ -121,7 +121,8 @@ public class MultiTypeCertificate {
         }
     }
     
-    public init(with certificate: CertificationProtocol, type: CertificateType, scannedDate: Date, storedTan: String?, ruleCountryCode: String? = nil) {
+    public init(with certificate: CertificationProtocol, type: CertificateType, scannedDate: Date, storedTan: String?,
+        ruleCountryCode: String? = nil) {
         self.ruleCountryCode = ruleCountryCode
         self.certificateType = type
         self.digitalCertificate = certificate

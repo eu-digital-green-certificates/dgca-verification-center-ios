@@ -87,7 +87,7 @@ public class DGCVerificationCenter {
             let applicableICAOInspector = ApplicableInspector(type: .icao, inspector: icInspector)
             self.applicableInspectors.append(applicableICAOInspector)
         #endif
-                        
+        
         #if canImport(DGCSHInspection)
             arrayTypes.append(.shc)
             let shInspector = DGCSHInspection()

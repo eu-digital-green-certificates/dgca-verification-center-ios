@@ -72,7 +72,7 @@ That object is responsible for verification of scanned and saved certificates.
 
 The certificate has its own specific type and can be verified depend on implemented inspectors
 
-      public enum CertificateType: String { case unknown, dcc, icao, divoc, shc }
+      public enum CertificateType: String { case unknown, dcc, icao, shc }
 
 The CertificateType contains existed types of certificates (.dcc, .shc) and may contain non-existed types (.icao) that aren't added yet.
 
