@@ -112,17 +112,17 @@ public class MultiTypeCertificate {
                 }
             #endif
         
-            // TODO: Add creating of certificate for Template format
-            
-        } else if CertificateApplicant.isApplicableTemplateFormat(payload: payload) {
-            self.certificateType = .template
-            #if canImport(TemplateInspection)
-                // create Template certificate here
-            #endif
+        // TODO: Add creating of certificate for Template format
+//        } else if CertificateApplicant.isApplicableTemplateFormat(payload: payload) {
+//            self.certificateType = .template
+//            #if canImport(TemplateInspection)
+//                // create Template certificate here
+//            #endif
 
         } else {
             throw CertificateParsingError.unknownFormat
         }
+            
     }
     
     public init(with certificate: CertificationProtocol, type: CertificateType, scannedDate: Date, storedTan: String?,
