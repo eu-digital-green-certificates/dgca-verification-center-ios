@@ -72,9 +72,9 @@ That object is responsible for verification of scanned and saved certificates.
 
 The certificate has its own specific type and can be verified depend on implemented inspectors
 
-      public enum CertificateType: String { case unknown, dcc, icao, shc }
+      public enum CertificateType: String { case unknown, dcc, shc }
 
-The CertificateType contains existed types of certificates (.dcc, .shc) and may contain non-existed types (.icao) that aren't added yet.
+The CertificateType contains existed types of certificates (.dcc, .shc) and may contain non-existed types (.template) that aren't added yet.
 
 #### Initialization of DGCVerificationCenter
 
@@ -96,8 +96,9 @@ The CertificateType contains existed types of certificates (.dcc, .shc) and may 
    Every Inspector is a root class of Inspector module. That module can be included to or excluded from the Verification Center.
    
       public var dccInspector: CertificateInspecting & DataLoadingProtocol?
-      public var icaoInspector: CertificateInspecting & DataLoadingProtocol?
       public var shcInspector: CertificateInspecting & DataLoadingProtocol?
+
+      public var templateInspector: CertificateInspecting & DataLoadingProtocol?
       
       public var applicableInspectors: [ApplicableInspector] = []
 

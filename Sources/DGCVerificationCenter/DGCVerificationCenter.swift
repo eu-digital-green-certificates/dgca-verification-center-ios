@@ -5,17 +5,14 @@ import DGCCoreLibrary
 import DCCInspection
 #endif
 
-#if canImport(ICAOInspection)
-import ICAOInspection
-#endif
-
 #if canImport(DGCSHInspection)
 import DGCSHInspection
 #endif
 
-#if canImport(DGCSHInspection)
-import DGCSHInspection
-#endif
+// TODO: Uncomment this when add new template inspector
+//#if canImport(TemplateInspection)
+//import TemplateInspection
+//#endif
 
 
 public struct ApplicableInspector {
@@ -51,7 +48,6 @@ public class DGCVerificationCenter {
     public let applicableCertificateTypes: [CertificateType]
     
     public var dccInspector: (CertificateValidating & DataLoadingProtocol)?
-    public var icaoInspector: (CertificateValidating & DataLoadingProtocol)?
     public var shcInspector: (CertificateValidating & DataLoadingProtocol)?
     
     public var applicableInspectors: [ApplicableInspector] = []
@@ -63,7 +59,7 @@ public class DGCVerificationCenter {
     public init() {
         var arrayTypes = [CertificateType] ()
         
-        // In reality all Verification Processors will be packed to separated modules
+        // In reality all Verification Inspectors will be packed to separated modules
         // and imported to the developed project
         // To check availability of module we will simple use compilator directive
         // #if canImport(ModuleNameInspector), f.e for "ModuleName" inspector
@@ -79,26 +75,24 @@ public class DGCVerificationCenter {
             let applicableDCCInspector = ApplicableInspector(type: .dcc, inspector: digInspector)
             self.applicableInspectors.append(applicableDCCInspector)
         #endif
-        
-        #if canImport(ICAOInspection)
-            arrayTypes.append(.icao)
-            let icInspector = ICAOInspection()
-            self.icaoInspector = icInspector
-            let applicableICAOInspector = ApplicableInspector(type: .icao, inspector: icInspector)
-            self.applicableInspectors.append(applicableICAOInspector)
-        #endif
-        
+                
         #if canImport(DGCSHInspection)
             arrayTypes.append(.shc)
             let shInspector = DGCSHInspection()
             self.shcInspector = shInspector
             let applicableSHInspector = ApplicableInspector(type: .shc, inspector: shInspector)
             self.applicableInspectors.append(applicableSHInspector)
-            #endif
+        #endif
         
+        // TODO: Add TemplateInspection initialization
+        #if canImport(TemplateInspection)
+         // Add TemplateInspector
+        #endif
+
         self.applicableCertificateTypes = arrayTypes
     }
     
+    // TODO: Add other TemplateInspection initialization
     public init?(types: [CertificateType]) {
         var arrayTypes = [CertificateType] ()
         
@@ -111,17 +105,7 @@ public class DGCVerificationCenter {
                 self.applicableInspectors.append(applicableInspector)
             }
         #endif
-        
-        #if canImport(ICAOInspection)
-            if types.contains(.icao) {
-                arrayTypes.append(.icao)
-                let inspector = ICAOInspection()
-                self.icaoInspector = inspector
-                let applicableInspector = ApplicableInspector(type: .icao, inspector: inspector)
-                self.applicableInspectors.append(applicableInspector)
-            }
-        #endif
-                        
+                                
         #if canImport(DGCSHInspection)
             if types.contains(.shc) {
                 arrayTypes.append(.shc)
@@ -152,16 +136,6 @@ public class DGCVerificationCenter {
             }
         #endif
         
-        #if canImport(ICAOInspection)
-            if type == .icao {
-                arrayTypes.append(.icao)
-                let inspector = ICAOInspection()
-                self.icaoInspector = inspector
-                let applicableInspector = ApplicableInspector(type: .icao, inspector: inspector)
-                self.applicableInspectors.append(applicableInspector)
-            }
-        #endif
-        
         #if canImport(DGCSHInspection)
             if type == .shc {
                 arrayTypes.append(.shc)
@@ -171,7 +145,7 @@ public class DGCVerificationCenter {
                 self.applicableInspectors.append(applicableInspector)
             }
         #endif
-
+        
         if !arrayTypes.isEmpty {
             self.applicableCertificateTypes = arrayTypes
         } else {
@@ -184,7 +158,7 @@ public class DGCVerificationCenter {
         return self.applicableCertificateTypes.contains(type)
     }
     
-    // MARK: - Validation
+    // TODO: - Add Validation for ticketing
     //    public static func isApplicableToTicketingFormat(payload: String) -> Bool {
     //        guard let payloadData = payload.data(using: .utf8),
     //            let ticketing = try? JSONDecoder().decode(CheckInQR.self, from: payloadData) else { return false }
@@ -215,23 +189,21 @@ public class DGCVerificationCenter {
                 group.leave()
             }
         }
+        
         group.notify(queue: .main) {
             completion(.success)
         }
     }
     
-    // MARK: - Applicable Formats
-
+    // MARK: - Is Applicable Formats
+    // General format
     public func isApplicableFormat(payload: String) -> Bool {
         return CertificateApplicant.isApplicableFormatForVerification(payload: payload)
     }
     
+    //DCC
     public func isApplicableDCCFormat(payload: String) -> Bool {
         return CertificateApplicant.isApplicableDCCFormat(payload: payload)
-    }
-    
-    public func isApplicableICAOFormat(payload: String) -> Bool {
-        return CertificateApplicant.isApplicableICAOFormat(payload: payload)
     }
     
     public func isApplicableSHCFormat(payload: String) -> Bool {
@@ -239,17 +211,16 @@ public class DGCVerificationCenter {
     }
 
     // MARK: - Verifying
-    
     public func validateCertificate(_ multiTypeCertificate: MultiTypeCertificate) -> ValidityState? {
         guard let certificate = multiTypeCertificate.digitalCertificate else { return nil }
         
         switch multiTypeCertificate.certificateType {
         case .unknown:
             return nil
+            
         case .dcc:
             return dccInspector?.validateCertificate(certificate)
-        case .icao:
-            return icaoInspector?.validateCertificate(certificate)
+            
         case .shc:
             return shcInspector?.validateCertificate(certificate)
         }

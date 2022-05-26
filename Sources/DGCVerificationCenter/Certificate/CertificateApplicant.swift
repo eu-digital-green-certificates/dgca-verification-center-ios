@@ -62,8 +62,8 @@ class CertificateApplicant {
     
     static func isApplicableFormatForVerification(payload: String) -> Bool {
         if isApplicableDCCFormat(payload: payload) ||
-            isApplicableICAOFormat(payload: payload) ||
-            isApplicableSHCFormat(payload: payload) {
+            isApplicableSHCFormat(payload: payload) ||
+            isApplicableTemplateFormat(payload: payload) {
             return true
         } else {
             return false
@@ -98,11 +98,7 @@ class CertificateApplicant {
         
         return body[ClaimKey.euDgcV1.rawValue].exists()
     }
-    
-    static func isApplicableICAOFormat(payload: String) -> Bool {
-        return false
-    }
-    
+        
     static func isApplicableSHCFormat(payload: String) -> Bool {
         var barcode: String = payload
         if !payload.starts(with: "ey") {
@@ -130,6 +126,11 @@ class CertificateApplicant {
         return true
     }
     
+    // TODO: Add "is applicable" for Template format
+    static func isApplicableTemplateFormat(payload: String) -> Bool {
+        return false
+    }
+
     private static func schBuilder(payload: String) -> String? {
         let rawBarcode = payload.replacingOccurrences(of: supportedSHCPrefix, with: "")
         var numericCode: String = ""

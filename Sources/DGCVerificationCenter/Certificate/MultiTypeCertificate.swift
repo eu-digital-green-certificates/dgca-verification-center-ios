@@ -13,12 +13,13 @@ import SwiftyJSON
 import DCCInspection
 #endif
 
-#if canImport(ICAOInspection)
-import ICAOInspection
-#endif
-
 #if canImport(DGCSHInspection)
 import DGCSHInspection
+#endif
+
+// TODO: Add import of TemplateInspection
+#if canImport(TemplateInspection)
+import TemplateInspection
 #endif
 
 public class MultiTypeCertificate {
@@ -100,12 +101,7 @@ public class MultiTypeCertificate {
                 }
             #endif
         
-        } else if CertificateApplicant.isApplicableICAOFormat(payload: payload) {
-            self.certificateType = .icao
-            #if canImport(ICAOInspection)
-                // create ICAO certificate here
-            #endif
-                
+        
         } else if CertificateApplicant.isApplicableSHCFormat(payload: payload) {
             self.certificateType = .shc
             #if canImport(DGCSHInspection)
@@ -116,6 +112,14 @@ public class MultiTypeCertificate {
                 }
             #endif
         
+            // TODO: Add creating of certificate for Template format
+            
+        } else if CertificateApplicant.isApplicableTemplateFormat(payload: payload) {
+            self.certificateType = .template
+            #if canImport(TemplateInspection)
+                // create Template certificate here
+            #endif
+
         } else {
             throw CertificateParsingError.unknownFormat
         }
