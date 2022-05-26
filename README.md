@@ -238,10 +238,12 @@ Validating of the certificate:
 ## How to expand the verification of new certificate standards
 
 A new inspector needs to be added to expand the verification. The package of that inspector should be connected to the Verification Center. 
-So, to create new inspector needs steps:
+So, to create new inspector needs to do next steps:
    1. Create new inspector package from template and connect to the Verification Center.
    2. In Verification Center add new type of certificate and fill in template places in a root class DGCAVerificationCenter and MultiTypeCertificate
-   3. Add some general methods to the core library if needs. (They will need for applicable methods in the Verification Center)
+   3. Add some general methods to the Core Library if needs (They will need for providing applicable methods in the Verification Center).
+
+The Inspector must implement certificate creating and verification and data downloading if needs.
 
 ### Prerequisites
 
