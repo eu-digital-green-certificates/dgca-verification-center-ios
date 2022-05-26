@@ -235,7 +235,14 @@ Validating of the certificate:
             }
         }
   
-  
+## How to expand the verification of new certificate standards
+
+A new inspector needs to be added to expand the verification. The package of that inspector should be connected to the Verification Center. 
+So, to create new inspector needs steps:
+   1. Create new inspector package from template and connect to the Verification Center.
+   2. In Verification Center add new type of certificate and fill in template places in a root class DGCAVerificationCenter and MultiTypeCertificate
+   3. Add some general methods to the core library if needs. (They will need for applicable methods in the Verification Center)
+
 ### Prerequisites
 
 Create an new inspection module and add it to the imports by importing it [here](https://github.com/eu-digital-green-certificates/dgca-verification-center-ios/blob/main/Sources/DGCVerificationCenter/DGCVerificationCenter.swift#L66)
